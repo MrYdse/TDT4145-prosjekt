@@ -15,4 +15,30 @@ public class Sql {
         statement = connection.createStatement();
     }
 
+    private Object excecuteReturnQuery(String query) {
+        try {
+            return this.statement.executeQuery(query);
+        } catch (Exception e) {
+            return "Unsuccesful";
+        }
+    }
+
+    private Object executeUpdateQuery(String query) {
+        try {
+            this.statement.executeUpdate(query);
+            return "Successful";
+        } catch (Exception e) {
+            return "Unsuccsessful";
+        }
+    }
+
+    private Object executeInsertQuery(String query) {
+        try {
+            this.statement.executeUpdate(query);
+            return "Successful";
+        } catch (Exception e) {
+            return "Unsuccessful";
+        }
+    }
+
 }
