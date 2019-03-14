@@ -1,43 +1,24 @@
+//package app;
+
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.Properties;
 
-public class Sql {
+public abstract class Sql {
 
-    private Connection connection;
-    private Statement statement;
-    private ResultSet resultSet;
+    protected Connection connection;
     
-    public Sql() throws SQLException {
-        connection = DriverManager.getConnection(
-            "jdbc:mysql://localhost:3306/prosjekt?autoReconnect=true&useSSL=false", "root", "root");
-        statement = connection.createStatement();
+    public Sql() {
     }
 
-    private Object excecuteReturnQuery(String query) {
+    public void connect() {
         try {
-            return this.statement.executeQuery(query);
+            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            Properties props = new Properties();
+            props.put("user", "root");
+            props.put("password", "root");
+            connection = DriverManager.getConnection("jdbc:mysql://localhost:3306/database?autoReconnect=true&useSSL=false", props);
         } catch (Exception e) {
-            return "Unsuccesful";
-        }
-    }
-
-    private Object executeUpdateQuery(String query) {
-        try {
-            this.statement.executeUpdate(query);
-            return "Successful";
-        } catch (Exception e) {
-            return "Unsuccsessful";
-        }
-    }
-
-    private Object executeInsertQuery(String query) {
-        try {
-            this.statement.executeUpdate(query);
-            return "Successful";
-        } catch (Exception e) {
-            return "Unsuccessful";
+            throw new RuntimeException("Unable to connect", e);
         }
     }
 
