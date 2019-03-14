@@ -1,4 +1,4 @@
-//package app;
+package app;
 
 import java.sql.*;
 import java.util.Properties;
