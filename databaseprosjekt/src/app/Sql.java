@@ -12,7 +12,7 @@ public abstract class Sql {
 
     public void connect() {
         try {
-            Class.forName("com.mysql.jdbc.Driver").newInstance();
+            //Class.forName("com.mysql.jdbc.Driver").newInstance();
             Properties props = new Properties();
             props.put("user", "root");
             props.put("password", "root");
