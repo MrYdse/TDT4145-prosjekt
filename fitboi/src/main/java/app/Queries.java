@@ -20,9 +20,9 @@ public final class Queries {
     }
 
     //addMachineExercise
-    public static String INSERT_MACHINE_EXERCISE(String name, int kilos, int sets, int machineId) {
+    public static String INSERT_MACHINE_EXERCISE(String name, String kilos, String sets, String machineID) {
         return "INSERT INTO exercise (name) VALUES (\"" + name + "\");"
-            + "INSERT INTO machineexercise (eid, kilos, sets, mid) Values ((SELECT LAST_INSERT_ID() FROM exercise), \"" + kilos + "\", \"" + sets + "\", \"" + machineId + "\");";
+            + "INSERT INTO machineexercise (eid, kilos, sets, mid) Values ((SELECT LAST_INSERT_ID() FROM exercise), \"" + kilos + "\", \"" + sets + "\", \"" + machineID + "\");";
     }
 
     //addExerciseGroup
@@ -31,8 +31,8 @@ public final class Queries {
     }
 
     //connectExerciseToGroup
-    public static String CONNECT_EXERCISE_TO_GROUP(int exerciseId, int exerciseGroupId) {
-        return "INSERT INTO exerciseispartofgroup (eid, egid) VALUES (\"" + exerciseId + "\", \"" + exerciseGroupId + "\");";
+    public static String CONNECT_EXERCISE_TO_GROUP(String string, String string2) {
+        return "INSERT INTO exerciseispartofgroup (eid, egid) VALUES (\"" + string + "\", \"" + string2 + "\");";
     }
 
     public static String GET_ALL_EXERCISES() {
@@ -82,7 +82,7 @@ public final class Queries {
         return "SELECT wid, wodatetime, note, duration, fitness, perfomance FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + uid + ";";
     }
 
-    public static String INSERT_WORKOUT(String datetime, String note, int duration, int fitness, int perfomance) {
+    public static String INSERT_WORKOUT(String datetime, String note, String duration, String fitness, String perfomance) {
         return "INSERT INTO workout (wodatetime, note, duration, fitness, performance) VALUES"
         + "(\"" + datetime + "\", \"" + note + "\", \"" + duration + "\", \"" + fitness + "\", \"" + perfomance + "\");";
     }
