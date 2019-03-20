@@ -133,9 +133,12 @@ public class UI extends Sql {
 
     private void listExerciseGroups() {}
 
-    private void listMachines() {}
+    private void listMachines() {
+
+    }
 
 
     private void listExercises() {
+    }
         
 
