@@ -18,6 +18,26 @@ public class UI extends Sql {
                             break;
             case "test":    printStream.print("Yup, that's a test");
                             break;
+            case "":    printStream.print("Yup, that's a test");
+                            break;
         }
     }
+
+    private void addUser() {
+
+    }
+
+    private void addExerciseGroup(String name) {
+        
+    }
+
+    private void addExercise(String type, String eafa) {
+        
+    }
+
+    private void connectExerciseToGroup() {
+
+    }
+
+    private void 
 }
