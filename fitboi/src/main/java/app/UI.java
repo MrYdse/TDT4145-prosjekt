@@ -121,9 +121,6 @@ public class UI extends Sql {
         return super.executeInsertQuery(Queries.INSERT_USER_WORKED_OUT(uid, wid));
     }
 
-    private String connectWorkoutExercise(int wid, int eid) {
-        return super.executeInsertQuery(Queries.CONNECT_WORKOUT_EXERCISE(wid, eid));
-    }
     private String addExerciseGroup(String name) {
         return super.executeInsertQuery(Queries.INSERT_EXERCISE_GROUP(name));
     }
