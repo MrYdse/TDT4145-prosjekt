@@ -12,15 +12,15 @@ public class UI extends Sql {
     private PrintStream printStream;
 
     private Map<String, String> methods = new HashMap<String, String>();
-    private String format = "%-50s%s%n";
+    private String format = "%-40s%s%n";
 
     public UI(PrintStream stream) {
         this.printStream = stream;
         this.connect();
 
-        methods.put("Help", "Prints list of methods");
-        methods.put("Add user", "Syntax: AddUser");
-        methods.put("Add exercise group", "Syntax: AddExerciseGroup <name>");
+        methods.put("'Help'", "Prints list of methods");
+        methods.put("'Add user'", "Syntax: AddUser");
+        methods.put("'Add exercise group'", "Syntax: AddExerciseGroup <name>");
     }
 
     public void handleInput(String input) {
