@@ -197,4 +197,8 @@ public class UI extends Sql {
     private void listExercisesInGroup(String groupName) {
 
     }
+
+    private void listPerformanceLastWeek() {
+
+    }
 }
