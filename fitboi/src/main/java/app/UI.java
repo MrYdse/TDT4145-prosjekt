@@ -2,6 +2,7 @@ package app;
 
 import java.sql.*;
 import java.io.PrintStream;
+import java.util.ArrayList;
 
 public class UI extends Sql {
 
@@ -31,7 +32,15 @@ public class UI extends Sql {
 
     }
 
-    private void addExercise(String type, String name) {
+    private void addExercise(String type, String name, ArrayList<String> subCategoryParams) {
+
+    }
+
+    private void addFreeExercise(String description) {
+
+    }
+
+    private void addMachine(String name, String functionDescription) {
 
     }
 
@@ -39,5 +48,11 @@ public class UI extends Sql {
 
     }
 
-    private void add
+    private void addMachineExercise(String machineID, String kilos, String sets) {
+
+    }
+
+    private String listExerciseGroups() {
+
+    }
 }
