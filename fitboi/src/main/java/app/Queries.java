@@ -16,13 +16,13 @@ public final class Queries {
 
     //addFreeExercise
     public static String INSERT_FREE_EXERCISE(String name, String description) {
-        return "INSERT INTO exercise (name) Values (" + name + ")" 
+        return "INSERT INTO exercise (name) Values (" + name + ")"
             + "INSERT INTO freeexercise (eid, description) Values ((SELECT LAST_INSERT_ID() FROM exercise), " + description + ")";
     }
 
     //addMachineExercise
-    public static String INSERT_MACHINE_EXERCISE(int kilos, int sets, int machineId) {
-        return "INSERT INTO exercise (name) Values (" + name + ")" 
+    public static String INSERT_MACHINE_EXERCISE(String name, int kilos, int sets, int machineId) {
+        return "INSERT INTO exercise (name) Values (" + name + ")"
             + "INSERT INTO machineexercise (eid, kilos, sets, mid) Values ((SELECT LAST_INSERT_ID() FROM exercise), " + kilos + ", " + sets + ", " + machineId + ")";
     }
 
@@ -84,7 +84,7 @@ public final class Queries {
     }
 
     public static String INSERT_WORKOUT(String datetime, String note, int duration, int fitness, int perfomance) {
-        return "INSERT INTO workout (datetime, note, duration, fitness, performance) VALUES" 
+        return "INSERT INTO workout (datetime, note, duration, fitness, performance) VALUES"
         + "(" + datetime + ", " + note + ", " + duration + ", " + fitness + ", " + perfomance + ")";
     }
 
@@ -98,12 +98,12 @@ public final class Queries {
 
     public static String GET_N_LAST_WORKOUTS_FOR_USER(int n, int uid) {
 		return "SELECT * FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + uid + " ORDER BY datetime DESC LIMIT " + n;
-		
+
     }
-    
+
     public static String GET_WORKOUT_BY_EXERCISE_AND_INTERVAL(int eid, String intervalStart, String intervalSlutt) {
 		return "SELECT workout.* FROM workout NATURAL JOIN exercise"
-                + "WHERE datetime > " + intervalStart + " AND datetime < " + intervalSlutt 
+                + "WHERE datetime > " + intervalStart + " AND datetime < " + intervalSlutt
                 + " AND exercise.wid = " + eid;
 	}
 
