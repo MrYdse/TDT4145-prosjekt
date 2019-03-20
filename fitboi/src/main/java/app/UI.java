@@ -193,4 +193,8 @@ public class UI extends Sql {
 
     private void listUsers() {
     }
+
+    private void listExercisesInGroup(String groupName) {
+
+    }
 }
