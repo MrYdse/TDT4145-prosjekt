@@ -27,7 +27,7 @@ public final class Queries {
         return "INSERT INTO exerciseispartofgroup (eid, egid) VALUES (\"" + exerciseId + "\", \"" + exerciseGroupId + "\")";
     }
 
-    public static String GET_EXERCISE_LIST() {
+    public static String GET_ALL_EXERCISE() {
 
     }
 
@@ -57,5 +57,32 @@ public final class Queries {
     public static String INSERT_MACHINE(String name, String description) {
         return "INSERT INTO machine (name, functiondescription) VALUES (" + name +", " + description + ")";
     }
+
+/*
+* ================================ WORKOUTS ===================================
+*/
+
+    public static String GET_ALL_WORKOUTS() {
+        return "SELECT wid, date, time, note, duration, fitness, perfomance FROM workout";
+    }
+
+    public static String GET_ALL_WORKOUTS_FOR_USER(int uid) {
+        return "SELECT wid, date, time, note, duration, fitness, perfomance FROM (workout NATURAL JOIN userworkedout) WHERE uid = " +uid;
+    }
+
+    public static String INSERT_WORKOUT(String datetime, String note, int duration, int fitness, int perfomance) {
+        return "INSERT INTO workout (date, time, note, duration, fitness, performance) VALUES" 
+        + "(" + datetime + ", " + note + ", " + duration + ", " + fitness + ", " + perfomance + ")";
+    }
+
+    public static String INSERT_USER_WORKED_OUT(int uid, int wid) {
+        return "INSERT INTO userworkedout (uid, wid) VALUES (" + uid + ", " + wid + ")";
+    }
+
+    public static String CONNECT_WORKOUT_EXERCISE(int wid, int eid) {
+        return "INSERT INTO workoutcontains (wid, eid) VALUES (" + wid + ", " + eid + ")";
+    }
+
+
 
 }
