@@ -1,12 +1,12 @@
 create table user (
-	uid integer not null,
+	uid integer not null auto_increment,
+    name varchar(45),
     primary key (uid)
 );
 
 create table workout (
-	wid integer not null,
-    date date,
-    time time(0),
+	wid integer not null auto_increment,
+    datetime datetime,
     note text,
     duration integer unsigned,
     fitness tinyint check (fitness between 1 and 10),
@@ -26,50 +26,40 @@ create table userworkedout (
         on delete cascade
 );
 
-create table freeexercise (
-	feid integer not null,
-    freedescription text,
-    primary key (feid)
-);
-
 create table machine (
-	mid integer not null,
+	mid integer not null auto_increment,
     name varchar(45),
     functiondescription text,
     primary key (mid)
 );
 
-create table machineexercise (
-	meid integer not null,
-    kilos int,
-    sets int,
-    mid integer not null,
-    primary key (meid),
-    foreign key (mid) references machine(mid)
+create table exercise (
+	eid integer not null auto_increment,
+    name varchar(45),
+    primary key (eid)
+);
+
+create table freeexercise (
+	eid integer not null,
+    description text,
+    primary key (eid),
+    foreign key (eid) references exercise(eid)
 		on update cascade
         on delete cascade
 );
 
-create table exercisegroup (
-	egid integer not null,
-    name varchar(45),
-    primary key (egid)
-);
-
-create table exercise (
+create table machineexercise (
 	eid integer not null,
-    name varchar(45),
-    type boolean not null,
-    feid int,
-    meid int,
+    kilos int,
+    sets int,
+    mid integer not null,
     primary key (eid),
-    foreign key (feid) references freeexercise(feid)
+	foreign key (eid) references exercise(eid)
 		on update cascade
-        on delete cascade,
-    foreign key (meid) references machineexercise(meid)
+		on delete cascade,
+    foreign key (mid) references machine(mid)
 		on update cascade
-        on delete cascade,
-	constraint only_one_foreign_key check (feid is not null xor meid is not null)
+        on delete cascade
 );
 
 create table exerciseispartofgroup (

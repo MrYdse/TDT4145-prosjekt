@@ -3,36 +3,45 @@ package app;
 public final class Queries {
 
     // addUser
-    public static String NEW_USER() {
-        return "INSERT INTO user () Values ()";
+    public static String NEW_USER(String name) {
+        return "INSERT INTO user (name) Values (" + name + ")";
     }
-    
+    /*
+	 * ================================ EXERCISES ===================================
+	 */
+
     //addFreeExercise
-    public static String INSERT_FREE_EXERCISE(String description) {
-        return "INSERT INTO exercise (name, type, feid, meid) Values ((SELECT ), \"" + exerciseId + "\", \"" + name + "\", \"" + type + "\")";
+    public static String INSERT_FREE_EXERCISE(String name, String description) {
+        return "INSERT INTO exercise (name) Values (" + name + ")"
+            + "INSERT INTO freeexercise (eid, description) Values ((SELECT LAST_INSERT_ID() FROM exercise), " + description + ")";
+    }
+
+    //addMachineExercise
+    public static String INSERT_MACHINE_EXERCISE(String name, int kilos, int sets, int machineId) {
+        return "INSERT INTO exercise (name) Values (" + name + ")"
+            + "INSERT INTO machineexercise (eid, kilos, sets, mid) Values ((SELECT LAST_INSERT_ID() FROM exercise), " + kilos + ", " + sets + ", " + machineId + ")";
     }
 
     //addExerciseGroup
-    public static String NEW_EXERCISE_GROUP(String name) {
-        return "INSERT INTO exercisegroup (name) Values (\"" + name + "\")";
-    }
-
-    //addExercise -- ikke ferdig - foreign keys
-    public static String INSERT_EXERCISE(String name, boolean type) {
-        return "INSERT INTO exercise (eid, name, type, feid, meid) Values ((SELECT ), \"" + exerciseId + "\", \"" + name + "\", \"" + type + "\")";
+    public static String INSERT_EXERCISE_GROUP(String name) {
+        return "INSERT INTO exercisegroup (name) Values (" + name + ")";
     }
 
     //connectExerciseToGroup
     public static String CONNECT_EXERCISE_TO_GROUP(int exerciseId, int exerciseGroupId) {
-        return "INSERT INTO exerciseispartofgroup (eid, egid) VALUES (\"" + exerciseId + "\", \"" + exerciseGroupId + "\")";
+        return "INSERT INTO exerciseispartofgroup (eid, egid) VALUES (" + exerciseId + ", " + exerciseGroupId + ")";
     }
 
-    public static String GET_ALL_EXERCISE() {
-
+    public static String GET_ALL_EXERCISES() {
+        return "SELECT * FROM exercise";
     }
 
-    public static String GET_EXERCISE_BY_NAME() {
+    public static String GET_EXERCISE_BY_ID(int id) {
+        return "SELECT * FROM exercise WHERE eid = " + id;
+    }
 
+    public static String GET_EXERCISE_BY_NAME(String name) {
+        return "SELECT * FROM exercise WHERE name = " + name;
     }
     /*
 	 * ================================ MACHINES ===================================
@@ -71,7 +80,7 @@ public final class Queries {
     }
 
     public static String INSERT_WORKOUT(String datetime, String note, int duration, int fitness, int perfomance) {
-        return "INSERT INTO workout (datetime, note, duration, fitness, performance) VALUES" 
+        return "INSERT INTO workout (datetime, note, duration, fitness, performance) VALUES"
         + "(" + datetime + ", " + note + ", " + duration + ", " + fitness + ", " + perfomance + ")";
     }
 
@@ -85,12 +94,12 @@ public final class Queries {
 
     public static String GET_N_LAST_WORKOUTS_FOR_USER(int n, int uid) {
 		return "SELECT * FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + uid + " ORDER BY datetime DESC LIMIT " + n;
-		
+
     }
-    
+
     public static String GET_WORKOUT_BY_EXERCISE_AND_INTERVAL(int eid, String intervalStart, String intervalSlutt) {
 		return "SELECT workout.* FROM workout NATURAL JOIN exercise"
-                + "WHERE datetime > " + intervalStart + " AND datetime < " + intervalSlutt 
+                + "WHERE datetime > " + intervalStart + " AND datetime < " + intervalSlutt
                 + " AND exercise.wid = " + eid;
 	}
 
