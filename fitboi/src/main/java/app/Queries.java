@@ -89,8 +89,8 @@ public final class Queries {
     }
     
     public static String GET_WORKOUT_BY_EXERCISE_AND_INTERVAL(int eid, String intervalStart, String intervalSlutt) {
-		return "SELECT workout.* FROM workout NATURAL JOIN excercice"
-                + "WHERE datetime > " +intervalStart + " AND datetime < " + intervalSlutt 
+		return "SELECT workout.* FROM workout NATURAL JOIN exercise"
+                + "WHERE datetime > " + intervalStart + " AND datetime < " + intervalSlutt 
                 + " AND exercise.wid = " + eid;
 	}
 
