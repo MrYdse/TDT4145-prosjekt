@@ -10,7 +10,7 @@ public final class Queries {
     }
 
     public static String GET_USER_ID_BY_NAME(String name) {
-        return "SELECT uid FROM exuser WHERE name = " + name + ";";
+        return "SELECT uid FROM exuser WHERE username = \"" + name + "\";";
     }
 
     public static String GET_ALL_USERS() {
