@@ -130,15 +130,13 @@ public class UI extends Sql {
     private void connectWorkoutExercise(String workoutID, String exerciseID) {}
 
 
-
-
     /* LISTINGS */
 
     private void listExerciseGroups() {}
 
     private void listMachines() {}
 
+    private void listExercises() {}
 
-    private void listExercises() {
-        
 
+}
