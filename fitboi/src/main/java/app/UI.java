@@ -44,7 +44,11 @@ public class UI extends Sql {
                                   System.out.printf(format, entry.getKey(), entry.getValue());
                             }
                             break;
-            case "listexercisegroups": listExerciseGroups();
+            case "listexercisegroups": print(listExerciseGroups());
+                            break;
+            case "listexercises": print(listExercises());
+                            break;
+            case "listmachines": print(listMachines());
                             break;
             default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
                             break;
@@ -70,6 +74,9 @@ public class UI extends Sql {
                             break;
             case "addfreeexercise": print(addFreeExercise(args.get(1), args.get(2)));
                             break;
+            case "connectuserworkoout": print(connectUserWorkout(args.get(1), args.get(2)));
+                            break;
+            case "connectworkoutexercise": print(connectWorkoutExercise(args.get(1), args.get(2)));
             default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
                             break;
             }
@@ -84,14 +91,14 @@ public class UI extends Sql {
             }
           }
 
-    /*      if (args.size() > 4){
+        if (args.size() > 4){
             switch(args.get(0)) {
-            case "addexercise": addExercise(args.get(1), args.get(2), new ArrayList<String>(Arrays.asList(args.subList(3, args.size())));
+            case "addworkout": print(addWorkout(args.get(1), args.get(2), args.get(3), args.get(4), args.get(5)));
                               break;
             default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
                             break;
             }
-          }*/
+          }
         }
 
     /* ADDS */
@@ -115,9 +122,6 @@ public class UI extends Sql {
         return super.executeInsertQuery(Queries.INSERT_WORKOUT(datetime, note, duration, fitness, perfomance));
     }
 
-    private String addUserWorkedOut(int uid, int wid) {
-        return super.executeInsertQuery(Queries.INSERT_USER_WORKED_OUT(uid, wid));
-    }
 
     private String addExerciseGroup(String name) {
         return super.executeInsertQuery(Queries.INSERT_EXERCISE_GROUP(name));
@@ -129,11 +133,11 @@ public class UI extends Sql {
         return super.executeInsertQuery(Queries.CONNECT_EXERCISE_TO_GROUP(string, string2));
     }
 
-    private String connectUserWorkout(int userID, int workoutID) {
-        return super.executeInsertQuery(Queries.INSERT_USER_WORKED_OUT(userID, workoutID));
+    private String connectUserWorkout(String string, String string2) {
+        return super.executeInsertQuery(Queries.INSERT_USER_WORKED_OUT(string, string2));
     }
 
-    private String connectWorkoutExercise(int workoutID, int exerciseID) {
+    private String connectWorkoutExercise(String workoutID, String exerciseID) {
         return super.executeInsertQuery(Queries.CONNECT_WORKOUT_EXERCISE(workoutID, exerciseID));
     }
 
@@ -142,26 +146,145 @@ public class UI extends Sql {
 
     /* LISTINGS */
 
-    private void listExerciseGroups() {}
-
-    private void listMachines() {}
-
-    private void listExercises() {}
-
-    private void print(String string) {
-        printStream.println(string);
+    private String listExerciseGroups() {
+        Object response = super.executeReturnQuery(Queries.GET_ALL_EXERCISE_GROUPS());
+        if (response instanceof String) {
+            return (String) response;
+        } else {
+            ResultSet rs = (ResultSet) response;
+            String out = "";
+            try {
+                while(rs.next()) {
+                    out += "Exercise Group ID: " + rs.getString("egid") + " Name: " + rs.getString("name") +"\n";
+                }
+                return out;
+            } catch (Exception e) {
+                return "Failed to read resultset with error: " + e.getMessage();
+            }  
+        } 
     }
 
-    private void listUsersLastWorkouts(String userID, String n) {}
-
-    private void listUsers() {
+    private String listMachines() {
+        Object response = super.executeReturnQuery(Queries.GET_ALL_MACHINES());
+        if (response instanceof String) {
+            return (String) response;
+        } else {
+            ResultSet rs = (ResultSet) response;
+            String out = "";
+            try {
+                while(rs.next()) {
+                    out += "Machine ID: " + rs.getString("mid") + " Name: " + rs.getString("name") + " Description: " + rs.getString("functiondescription") + "\n";
+                }
+                return out;
+            } catch (Exception e) {
+                return "Failed to read resultset with error: " + e.getMessage();
+            }  
+        }
     }
 
-    private void listExercisesInGroup(String groupName) {
+    private String listExercises() {
+        Object response = super.executeReturnQuery(Queries.GET_ALL_FREE_EXERCISES());
+        String out = "Free exercises:\n";
+        if (response instanceof String) {
+            out = (String) response;
+        } else {
+            ResultSet rs = (ResultSet) response;
+            try {
+                while(rs.next()) {
+                    out += "Exercise ID: " + rs.getString("eid") + " Name: " + rs.getString("name") + " Description: " + rs.getString("functiondescription") + "\n";
+                }
+            } catch (Exception e) {
+                return "Failed to read resultset with error: " + e.getMessage();
+            }
+        }
+        out += "Machine exercices:\n";
+        response = super.executeReturnQuery(Queries.GET_ALL_MACHINE_EXERCISES());
+        if (response instanceof String) {
+            out = (String) response;
+        } else {
+            ResultSet rs = (ResultSet) response;
+            try {
+                while(rs.next()) {
+                    out += "Exercise ID: " + rs.getString("eid") + " Name: " + rs.getString("exercise.name") + " Machine name: "+ rs.getString("machine.name") + " Kilos: " + rs.getString("kilos") + rs.getString("sets") + "\n";
+                }
+            } catch (Exception e) {
+                return "Failed to read resultset with error: " + e.getMessage();
+            }
+        }
+        return out;
+    }
 
+    private String listUsersLastWorkouts(String userID, String n) {
+        Object response = super.executeReturnQuery(Queries.GET_N_LAST_WORKOUTS_FOR_USER(n, userID));
+        if (response instanceof String) {
+            return (String) response;
+        } else {
+            ResultSet rs = (ResultSet) response;
+            String out = "";
+            try {
+                while(rs.next()) {
+                    out += "User ID: " + rs.getString("uid") + " Date: " + rs.getString("wodatetime") + " Note: " + rs.getString("note") + rs.getString("duration") + rs.getString("fitness") + rs.getString("performance") + "\n";
+                }
+                return out;
+            } catch (Exception e) {
+                return "Failed to read resultset with error: " + e.getMessage();
+            }  
+        }
+    }
+
+    private String listUsers() {
+        Object response = super.executeReturnQuery(Queries.GET_ALL_USERS());
+        if (response instanceof String) {
+            return (String) response;
+        } else {
+            ResultSet rs = (ResultSet) response;
+            String out = "";
+            try {
+                while(rs.next()) {
+                    out += "User ID: " + rs.getString("uid") + " Name: " + rs.getString("name") + "\n";
+                }
+                return out;
+            } catch (Exception e) {
+                return "Failed to read resultset with error: " + e.getMessage();
+            }  
+        }
+    }
+
+    private String listExercisesInGroup(String groupName) {
+        Object response = super.executeReturnQuery(Queries.GET_EXERCISE_GROUP_BY_NAME(groupName));
+        String egid = "";
+        if (response instanceof String) {
+            return (String) response;
+        } else {
+            ResultSet rs = (ResultSet) response;
+            try {
+                egid = rs.getString("egid");
+            } catch (Exception e) {
+                return "Failed to read resultset with error: " + e.getMessage();
+            }  
+        }
+        response = super.executeReturnQuery(Queries.GET_ALL_EXERCISES_IN_GROUP(egid));
+        if (response instanceof String) {
+            return (String) response;
+        } else {
+            ResultSet rs = (ResultSet) response;
+            String out = "";
+            try {
+                while(rs.next()) {
+                    out += "User ID: " + rs.getString("uid") + " Name: " + rs.getString("name") + "\n";
+                }
+                return out;
+            } catch (Exception e) {
+                return "Failed to read resultset with error: " + e.getMessage();
+            }  
+        }
     }
 
     private void listPerformanceLastWeek() {
 
+    }
+
+    private void print(String string) {
+        printStream.println(string);
     }
 }

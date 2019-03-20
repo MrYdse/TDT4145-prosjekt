@@ -1,4 +1,7 @@
 package app;
+
+import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
+
 public final class Queries {
 
     // addUser
@@ -7,8 +10,13 @@ public final class Queries {
     }
 
     public static String GET_USER_ID_BY_NAME(String name) {
-        return "SELECT uid FROM exuser WHERE navn = " + name + ";";
+        return "SELECT uid FROM exuser WHERE name = " + name + ";";
     }
+
+    public static String GET_ALL_USERS() {
+        return "SELECT * FROM exuser;";
+    }
+
     /*
 	 * ================================ EXERCISES ===================================
 	 */
@@ -30,13 +38,25 @@ public final class Queries {
         return "INSERT INTO exercisegroup (name) Values (\"" + name + "\");";
     }
 
+    public static String GET_EXERCISE_GROUP_BY_NAME(String name) {
+        return "SELECT egid FROM exuser WHERE name = " + name + ";";
+    }
+
     //connectExerciseToGroup
     public static String CONNECT_EXERCISE_TO_GROUP(String string, String string2) {
         return "INSERT INTO exerciseispartofgroup (eid, egid) VALUES (\"" + string + "\", \"" + string2 + "\");";
     }
 
-    public static String GET_ALL_EXERCISES() {
-        return "SELECT * FROM exercise;";
+    public static String GET_ALL_FREE_EXERCISES() {
+        return "SELECT * FROM (freeexercise NATURAL JOIN exercise);";
+    }
+
+    public static String GET_ALL_MACHINE_EXERCISES() {
+        return "SELECT * FROM ((machineexercise NATURAL JOIN machine) INNER JOIN exercise ON machineexercise.eid = exercise.eid);";
+    }
+
+    public static String GET_ALL_EXERCISE_GROUPS() {
+        return "SELECT * FROM exercisegroup;";
     }
 
     public static String GET_EXERCISE_BY_ID(int id) {
@@ -46,6 +66,11 @@ public final class Queries {
     public static String GET_EXERCISE_BY_NAME(String name) {
         return "SELECT * FROM exercise WHERE name = " + name + ";";
     }
+
+    public static String GET_ALL_EXERCISES_IN_GROUP(String egid) {
+        return "SELECT * FROM (exercise NATURAL JOIN (SELECT * FROM exercisegroup where egid = \"" +  egid + "\"));";
+    }
+
 /*
 * ================================ MACHINES ===================================
 */
@@ -87,16 +112,16 @@ public final class Queries {
         + "(\"" + datetime + "\", \"" + note + "\", \"" + duration + "\", \"" + fitness + "\", \"" + perfomance + "\");";
     }
 
-    public static String INSERT_USER_WORKED_OUT(int uid, int wid) {
-        return "INSERT INTO userworkedout (uid, wid) VALUES (\"" + uid + "\", \"" + wid + "\"\");";
+    public static String INSERT_USER_WORKED_OUT(String string, String string2) {
+        return "INSERT INTO userworkedout (uid, wid) VALUES (\"" + string + "\", \"" + string2 + "\"\");";
     }
 
-    public static String CONNECT_WORKOUT_EXERCISE(int wid, int eid) {
-        return "INSERT INTO workoutcontains (wid, eid) VALUES (\"" + wid + "\", \"" + eid + "\");";
+    public static String CONNECT_WORKOUT_EXERCISE(String workoutID, String exerciseID) {
+        return "INSERT INTO workoutcontains (wid, eid) VALUES (\"" + workoutID + "\", \"" + exerciseID + "\");";
     }
 
-    public static String GET_N_LAST_WORKOUTS_FOR_USER(int n, int uid) {
-		return "SELECT * FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + uid + " ORDER BY datetime DESC LIMIT " + n + ";";
+    public static String GET_N_LAST_WORKOUTS_FOR_USER(String n, String userID) {
+		return "SELECT * FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + userID + " ORDER BY datetime DESC LIMIT " + n + ";";
 
     }
 
