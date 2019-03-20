@@ -1,6 +1,5 @@
 package app;
-import app.Sql;
-import app.Queries;
+
 import java.sql.*;
 import java.io.PrintStream;
 import java.util.ArrayList;
@@ -15,7 +14,6 @@ public class UI extends Sql {
     private Map<String, String> methods = new HashMap<String, String>();
     private String format = "%-40s%s%n";
 
-
     public UI(PrintStream stream) {
         this.printStream = stream;
         this.connect();
@@ -23,6 +21,17 @@ public class UI extends Sql {
         methods.put("'Help'", "Prints list of methods");
         methods.put("'Add user'", "Syntax: AddUser");
         methods.put("'Add exercise group'", "Syntax: AddExerciseGroup <name>");
+        methods.put("'Add machine'", "Syntax: AddMachine <machineID> <kilos> <sets>");
+        methods.put("'Add free exercise'", "Syntax: AddFreeExercise <description>");
+        methods.put("'Add workout'", "Syntax: AddWorkout <date> <time> <note> <duration> <fitness> <performance>");
+        methods.put("'Connect exercise to group'", "Syntax: ConnectExerciseToGroup <exerciseId> <exerciseGroupId>");
+        methods.put("'Connect user workout'", "Syntax: ConnectUserWorkout <userID> <workoutID>");
+        methods.put("'Connect workout exercise'", "Syntax: ConnectWorkoutExercise <workoutID> <exerciseID>");
+        methods.put("'List exercise groups'", "Syntax: listExerciseGroups");
+        methods.put("'List machines'", "Syntax: listMachines");
+        methods.put("'List exercises'", "Syntax: listExercises");
+        methods.put("'List workouts'", "Syntax: listWorkouts");
+        //methods.put("''", "Syntax: ");
     }
 
     public void handleInput(String input) {
@@ -75,7 +84,7 @@ public class UI extends Sql {
             }
           }
 
-          /*if (args.size() > 4){
+    /*      if (args.size() > 4){
             switch(args.get(0)) {
             case "addexercise": addExercise(args.get(1), args.get(2), new ArrayList<String>(Arrays.asList(args.subList(3, args.size())));
                               break;
@@ -85,14 +94,11 @@ public class UI extends Sql {
           }*/
         }
 
-/*
-* ================================ INSERT-METHODS ===================================
-*/
-
-    private String addUser(String name) {
-        return super.executeInsertQuery(Queries.INSERT_USER(name));
-    }
     /* ADDS */
+
+    private void addUser() {}
+
+    private void addMachine(String name, String functionDescription) {}
 
     private void addMachineExercise(String machineID, String kilos, String sets) {}
 
@@ -100,23 +106,9 @@ public class UI extends Sql {
 
     private void addExercise(String type, String name, ArrayList<String> subCategoryParams) {}
 
-    private String addMachine(String name, String functionDescription) {
-        return super.executeInsertQuery(Queries.INSERT_MACHINE(name, functionDescription));
-    }
-
-    private String addWorkout(String datetime, String note, int duration, int fitness, int perfomance) {
-        return super.executeInsertQuery(Queries.INSERT_WORKOUT(datetime, note, duration, fitness, perfomance));
-    }
-
-    private String addUserWorkedOut(int uid, int wid) {
-        return super.executeInsertQuery(Queries.INSERT_USER_WORKED_OUT(uid, wid));
-    }
-
-    private String connectWorkoutExercise(int wid, int eid) {
-        return super.executeInsertQuery(Queries.CONNECT_WORKOUT_EXERCISE(wid, eid));
-    }
     private void addExerciseGroup(String name) {}
 
+    private void addWorkout(String date, String time, String note, String duration, String fitness, String performance) {}
 
     /* CONNECTIONS */
 
@@ -127,16 +119,17 @@ public class UI extends Sql {
     private void connectWorkoutExercise(String workoutID, String exerciseID) {}
 
 
+
+
     /* LISTINGS */
 
     private void listExerciseGroups() {}
 
-    private void listMachines() {
+    private void listMachines() {}
 
-    }
+    private void listExercises() {}
 
-    private void listExercises() {
-    }
-        
+    private void listWorkouts() {}
 
+    private void list() {}
 }
