@@ -105,7 +105,7 @@ public class UI extends Sql {
     }
 
     private String addWorkout(String datetime, String note, int duration, int fitness, int perfomance) {
-        return super.executeInsertQuery(Queries.INSERT_WORKOUT(datetime, note, duration, fitness, perfomance))
+        return super.executeInsertQuery(Queries.INSERT_WORKOUT(datetime, note, duration, fitness, perfomance));
     }
 
     private String addUserWorkedOut(int uid, int wid) {
@@ -127,8 +127,6 @@ public class UI extends Sql {
     private void connectWorkoutExercise(String workoutID, String exerciseID) {}
 
 
-
-
     /* LISTINGS */
 
     private void listExerciseGroups() {}
@@ -137,8 +135,8 @@ public class UI extends Sql {
 
     }
 
-
     private void listExercises() {
     }
         
 
+}
