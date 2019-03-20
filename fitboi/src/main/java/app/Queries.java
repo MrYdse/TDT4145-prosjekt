@@ -71,7 +71,7 @@ public final class Queries {
     }
 
     public static String INSERT_WORKOUT(String datetime, String note, int duration, int fitness, int perfomance) {
-        return "INSERT INTO workout (date, time, note, duration, fitness, performance) VALUES" 
+        return "INSERT INTO workout (datetime, note, duration, fitness, performance) VALUES" 
         + "(" + datetime + ", " + note + ", " + duration + ", " + fitness + ", " + perfomance + ")";
     }
 
@@ -83,6 +83,15 @@ public final class Queries {
         return "INSERT INTO workoutcontains (wid, eid) VALUES (" + wid + ", " + eid + ")";
     }
 
-
+    public static String GET_N_LAST_WORKOUTS_FOR_USER(int n, int uid) {
+		return "SELECT * FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + uid + " ORDER BY datetime DESC LIMIT " + n;
+		
+    }
+    
+    public static String GET_WORKOUT_BY_EXERCISE_AND_INTERVAL(int eid, String intervalStart, String intervalSlutt) {
+		return "SELECT workout.* FROM workout NATURAL JOIN excercice"
+                + "WHERE datetime > " +intervalStart + " AND datetime < " + intervalSlutt 
+                + " AND exercise.wid = " + eid;
+	}
 
 }
