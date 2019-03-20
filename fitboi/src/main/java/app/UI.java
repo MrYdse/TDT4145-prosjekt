@@ -33,8 +33,6 @@ public class UI extends Sql {
                                   System.out.printf(format, entry.getKey(), entry.getValue());
                             }
                             break;
-            case "adduser": addUser();
-                            break;
             case "listexercisegroups": listExerciseGroups();
                             break;
             default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
@@ -44,9 +42,11 @@ public class UI extends Sql {
 
           if (args.size() == 2){
             switch(args.get(0)) {
-            case "addexercisegroup": addExerciseGroup(args.get(1));
+            case "adduser": addUser(args.get(1));
                             break;
-            case "addfreeexercise": addFreeExercise(args.get(1));
+            case "addexercisegroup": print(addExerciseGroup(args.get(1)));
+                            break;
+            case "addfreeexercise": print(addFreeExercise(args.get(1)));
                             break;
             default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
                             break;
@@ -55,9 +55,9 @@ public class UI extends Sql {
 
           if (args.size() == 3){
             switch(args.get(0)) {
-            case "addmachine": addMachine(args.get(1), args.get(2));
+            case "addmachine": print(addMachine(args.get(1), args.get(2)));
                             break;
-            case "connectexercisetogroup": connectExerciseToGroup(args.get(1), args.get(2));
+            case "connectexercisetogroup": print(connectExerciseToGroup(args.get(1), args.get(2)));
                             break;
             default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
                             break;
@@ -66,9 +66,9 @@ public class UI extends Sql {
 
           if (args.size() == 4){
             switch(args.get(0)) {
-              case "addmachineexercise": addMachineExercise(args.get(1), args.get(2), args.get(3));
+              case "addmachineexercise": print(addMachineExercise(args.get(1), args.get(2), args.get(3)));
                               break;
-              case "addexercise": addExercise(args.get(1), args.get(2), new ArrayList<String>(Arrays.asList(args.get(3))));
+              case "addexercise": print(addExercise(args.get(1), args.get(2), new ArrayList<String>(Arrays.asList(args.get(3)))));
                               break;
               default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
                               break;
@@ -94,11 +94,17 @@ public class UI extends Sql {
     }
     /* ADDS */
 
-    private void addMachineExercise(String machineID, String kilos, String sets) {}
+    private String addMachineExercise(String machineID, String kilos, String sets) {
+        return sets;
+    }
 
-    private void addFreeExercise(String description) {}
+    private String addFreeExercise(String description) {
+        return description;
+    }
 
-    private void addExercise(String type, String name, ArrayList<String> subCategoryParams) {}
+    private String addExercise(String type, String name, ArrayList<String> subCategoryParams) {
+        return name;
+    }
 
     private String addMachine(String name, String functionDescription) {
         return super.executeInsertQuery(Queries.INSERT_MACHINE(name, functionDescription));
@@ -115,16 +121,24 @@ public class UI extends Sql {
     private String connectWorkoutExercise(int wid, int eid) {
         return super.executeInsertQuery(Queries.CONNECT_WORKOUT_EXERCISE(wid, eid));
     }
-    private void addExerciseGroup(String name) {}
+    private String addExerciseGroup(String name) {
+        return name;
+    }
 
 
     /* CONNECTIONS */
 
-    private void connectExerciseToGroup(String exerciseID, String exerciseGroupID) {}
+    private String connectExerciseToGroup(String exerciseID, String exerciseGroupID) {
+        return exerciseGroupID;
+    }
 
-    private void connectUserWorkout(String userID, String workoutID) {}
+    private String connectUserWorkout(String userID, String workoutID) {
+        return workoutID;
+    }
 
-    private void connectWorkoutExercise(String workoutID, String exerciseID) {}
+    private String connectWorkoutExercise(String workoutID, String exerciseID) {
+        return exerciseID;
+    }
 
 
     /* LISTINGS */
@@ -138,5 +152,9 @@ public class UI extends Sql {
     private void listExercises() {
     }
         
+    private void print(String string) {
+        printStream.println(string);
+    }
+
 
 }

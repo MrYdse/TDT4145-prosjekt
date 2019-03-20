@@ -4,11 +4,11 @@ public final class Queries {
 
     // addUser
     public static String INSERT_USER(String name) {
-        return "INSERT INTO user (name) Values (" + name  +")";
+        return "INSERT INTO exuser (name) Values (" + name  +")";
     }
 
     public static String GET_USER_ID_BY_NAME(String name) {
-        return "SELECT uid FROM user WHERE navn = " + name;
+        return "SELECT uid FROM exuser WHERE navn = " + name;
     }
     /*
 	 * ================================ EXERCISES ===================================
