@@ -2,7 +2,8 @@ package app;
 
 import java.sql.*;
 import java.io.PrintStream;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Map;
 
 public class UI extends Sql {
 
@@ -24,9 +25,41 @@ public class UI extends Sql {
             case "test":    printStream.print("Yup, that's a test");
                             break;
             case "help":    for (Map.Entry<String, String> entry : methods.entrySet()) {
-                              System.out.printf(format, entry.getKey(), entry.getValue());
+                                  System.out.printf(format, entry.getKey(), entry.getValue());
                             }
                             break;
         }
+    }
+
+    private void addUser() {
+
+    }
+
+    private void addExerciseGroup(String name) {
+
+    }
+
+    private void addExercise(String type, String name, ArrayList<String> subCategoryParams) {
+
+    }
+
+    private void addFreeExercise(String description) {
+
+    }
+
+    private void addMachine(String name, String functionDescription) {
+
+    }
+
+    private void connectExerciseToGroup(String exerciseID) {
+
+    }
+
+    private void addMachineExercise(String machineID, String kilos, String sets) {
+
+    }
+
+    private String listExerciseGroups() {
+
     }
 }
