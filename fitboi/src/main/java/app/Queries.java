@@ -27,7 +27,6 @@ public final class Queries {
         return "INSERT INTO exerciseispartofgroup (eid, egid) VALUES (\"" + exerciseId + "\", \"" + exerciseGroupId + "\")";
     }
 
-<<<<<<< HEAD
     public static String GET_EXERCISE_LIST() {
 
     }
@@ -35,7 +34,6 @@ public final class Queries {
     public static String GET_EXERCISE_BY_NAME() {
 
     }
-=======
     /*
 	 * ================================ MACHINES ===================================
 	 */
@@ -60,5 +58,4 @@ public final class Queries {
         return "INSERT INTO machine (name, functiondescription) VALUES (" + name +", " + description + ")";
     }
 
->>>>>>> a6744d39ee1d3a1ddb27a9662c658e1c0715bddc
 }
