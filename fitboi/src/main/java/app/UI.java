@@ -1,6 +1,8 @@
 package app;
 
 import java.sql.*;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -163,9 +165,12 @@ public class UI extends Sql {
     }
 
     private void listPerformanceLastWeek(String username) {
+        // YYYY-MM-DD HH:MM:SS
+        DateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+
         long DAY_IN_MS = 1000 * 60 * 60 * 24;
         Date lastWeek = new Date(System.currentTimeMillis() - (7 * DAY_IN_MS));
         String uid = super.executeReturnQuery(Queries.GET_USER_ID_BY_NAME(username));
-        return super.executeReturnQuery(Queries.GET_WORKOUT_PERFORMANCE_LAST_WEEK(uid, lastWeek));
+        return super.executeReturnQuery(Queries.GET_WORKOUT_PERFORMANCE_LAST_WEEK(uid, format.format(lastWeek)));
     }
 }
