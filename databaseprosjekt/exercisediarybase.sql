@@ -62,6 +62,12 @@ create table machineexercise (
         on delete cascade
 );
 
+create table exercisegroup (
+    egid integer not null auto_increment,
+    name varchar(45),
+    primary key (egid)
+);
+
 create table exerciseispartofgroup (
 	eid integer not null,
     egid integer not null,
