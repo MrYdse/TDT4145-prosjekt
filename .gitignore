@@ -25,3 +25,5 @@ hs_err_pid*
 *desktop.ini
 
 *.vscode
+
+.vscode/launch.json
