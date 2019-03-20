@@ -7,8 +7,6 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
-import sun.net.www.content.text.plain;
-
 public class UI extends Sql {
 
     private PrintStream printStream;
@@ -21,7 +19,8 @@ public class UI extends Sql {
         this.connect();
 
         methods.put("'Help'", "Prints list of methods");
-        methods.put("'Add user'", "Syntax: AddUser");
+        methods.put("'Add user'", "Syntax: AddUser <name>");
+        methods.put("'Add machine exercise'", "Syntax: AddMachineExercise <kilos> <sets>");
         methods.put("'Add exercise group'", "Syntax: AddExerciseGroup <name>");
         methods.put("'Add machine'", "Syntax: AddMachine <machineID> <kilos> <sets>");
         methods.put("'Add free exercise'", "Syntax: AddFreeExercise <description>");
@@ -33,6 +32,8 @@ public class UI extends Sql {
         methods.put("'List machines'", "Syntax: listMachines");
         methods.put("'List exercises'", "Syntax: listExercises");
         methods.put("'List workouts'", "Syntax: listWorkouts");
+        methods.put("'List users last workouts'", "Syntax: listUsersLastWorkouts <number>");
+        methods.put("'List users'", "Syntax: listUsers");
         //methods.put("''", "Syntax: ");
     }
 
@@ -44,7 +45,8 @@ public class UI extends Sql {
                                   System.out.printf(format, entry.getKey(), entry.getValue());
                             }
                             break;
-            case "listexercisegroups": listExerciseGroups();
+            case "exit": break;
+            case "listexercisegroups" : listExerciseGroups();
                             break;
             default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
                             break;
@@ -70,6 +72,8 @@ public class UI extends Sql {
                             break;
             case "connectexercisetogroup": print(connectExerciseToGroup(args.get(1), args.get(2)));
                             break;
+            case "addmachineexercise": print(addMachineExercise(args.get(1), args.get(2)));
+                            break;
             default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
                             break;
             }
@@ -77,16 +81,12 @@ public class UI extends Sql {
 
           if (args.size() == 4){
             switch(args.get(0)) {
-              case "addmachineexercise": print(addMachineExercise(args.get(1), args.get(2), args.get(3)));
-                              break;
-              case "addexercise": print(addExercise(args.get(1), args.get(2), new ArrayList<String>(Arrays.asList(args.get(3)))));
-                              break;
               default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
                               break;
             }
           }
 
-    /*      if (args.size() > 4){
+    /*      if (args.size() > 6){
             switch(args.get(0)) {
             case "addexercise": addExercise(args.get(1), args.get(2), new ArrayList<String>(Arrays.asList(args.subList(3, args.size())));
                               break;
@@ -98,7 +98,7 @@ public class UI extends Sql {
 
     /* ADDS */
 
-    private String addMachineExercise(String machineID, String kilos, String sets) {
+    private String addMachineExercise(String kilos, String sets) {
         return sets;
     }
     private String addUser(String name) {
@@ -109,7 +109,11 @@ public class UI extends Sql {
         return description;
     }
 
-    private String addExercise(String type, String name, ArrayList<String> subCategoryParams) {
+    private String addMachineExercise(String type, String name, String kilos, String sets) {
+        return name;
+    }
+
+    private String addGroupExercise(String type, String name, String description) {
         return name;
     }
 
