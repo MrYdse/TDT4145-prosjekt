@@ -3,6 +3,7 @@ package app;
 import java.sql.*;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Map;
 
 public class UI extends Sql {
@@ -59,7 +60,7 @@ public class UI extends Sql {
 
     }
 
-    private String listExerciseGroups() {
+    private void listExerciseGroups() {
 
     }
 }
