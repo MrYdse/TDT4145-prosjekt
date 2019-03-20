@@ -3,14 +3,20 @@ package app;
 import java.sql.*;
 import java.io.PrintStream;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 public class UI extends Sql {
 
     private PrintStream printStream;
 
+    private Map<String, String> methods = new HashMap<String, String>();
+    private String format = "%-40s%s%n";
+
     public UI(PrintStream stream) {
         this.printStream = stream;
         this.connect();
+        methods.put("Help", "Prints list of methods");
     }
 
     public void handleInput(String input) {
@@ -19,7 +25,9 @@ public class UI extends Sql {
                             break;
             case "test":    printStream.print("Yup, that's a test");
                             break;
-            case "":    printStream.print("Yup, that's a test");
+            case "help":    for (Map.Entry<String, String> entry : methods.entrySet()) {
+                                  System.out.printf(format, entry.getKey(), entry.getValue());
+                            }
                             break;
         }
     }
@@ -52,7 +60,7 @@ public class UI extends Sql {
 
     }
 
-    private String listExerciseGroups() {
+    private void listExerciseGroups() {
 
     }
 }
