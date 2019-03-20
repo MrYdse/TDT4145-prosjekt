@@ -159,9 +159,6 @@ public class UI extends Sql {
 
     private void listUsersLastWorkouts(String userID, String n) {}
 
-<<<<<<< HEAD
-    private void listUsers() {}
-=======
     private void listUsers() {
     }
 
@@ -172,5 +169,4 @@ public class UI extends Sql {
     private void listPerformanceLastWeek() {
 
     }
->>>>>>> c790486b7389cf0ce90beefbdcd0ae8ce6f970ab
 }
