@@ -94,8 +94,6 @@ public class UI extends Sql {
     }
     /* ADDS */
 
-    private void addMachine(String name, String functionDescription) {}
-
     private void addMachineExercise(String machineID, String kilos, String sets) {}
 
     private void addFreeExercise(String description) {}
@@ -119,7 +117,6 @@ public class UI extends Sql {
     }
     private void addExerciseGroup(String name) {}
 
-    private void addWorkout(String date, String time, String note, String duration, String fitness, String performance) {}
 
     /* CONNECTIONS */
 
