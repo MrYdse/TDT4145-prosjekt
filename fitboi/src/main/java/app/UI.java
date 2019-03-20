@@ -60,6 +60,8 @@ public class UI extends Sql {
                             break;
             case "addexercisegroup": print(addExerciseGroup(args.get(1)));
                             break;
+            case "whois": print(whoIsUsername(args.get(1)));
+                            break;
             default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
                             break;
             }
@@ -170,7 +172,29 @@ public class UI extends Sql {
 
         long DAY_IN_MS = 1000 * 60 * 60 * 24;
         Date lastWeek = new Date(System.currentTimeMillis() - (7 * DAY_IN_MS));
-        String uid = super.executeReturnQuery(Queries.GET_USER_ID_BY_NAME(username));
-        return super.executeReturnQuery(Queries.GET_WORKOUT_PERFORMANCE_LAST_WEEK(uid, format.format(lastWeek)));
+        String uid = whoIsUsername(username);
+        String result = "";
+        try {
+            ResultSet rs = (ResultSet) super.executeReturnQuery(Queries.GET_WORKOUT_PERFORMANCE_LAST_WEEK(uid, format.format(lastWeek)));
+            while(rs.next()) {
+                result += "Datetime: " + rs.getString("datetime") + ", Performance: " + rs.getString("performance") + "\n";
+            }
+        } catch (Exception e) {
+            result = "Could not get last week's performance";
+        }
+        return result;
+    }
+
+    /* TESTS */
+
+    private String whoIsUsername(String username) {
+        try {
+            ResultSet rs = (ResultSet) super.executeReturnQuery(Queries.GET_USER_ID_BY_NAME(username));
+            rs.next();
+            String result = "" + rs.getString("uid");
+            return result;
+        } catch (Exception e) {
+            return "Could not get user id from username";
+        }
     }
 }
