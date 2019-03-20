@@ -29,7 +29,7 @@ public abstract class Sql {
         }
     }
 
-    private Object executeReturnQuery(String query) {
+    protected Object executeReturnQuery(String query) {
         try {
             return this.statement.executeQuery(query);
         } catch (Exception err) {
@@ -37,7 +37,7 @@ public abstract class Sql {
         }
     }
 
-    private Object executeUpdateQuery(String query) {
+    protected String executeUpdateQuery(String query) {
         try {
             this.statement.executeUpdate(query);
             return "Successfully executed update query";
@@ -46,7 +46,7 @@ public abstract class Sql {
         }
     }
 
-    private Object executeInsertQuery(String query) {
+    protected String executeInsertQuery(String query) {
         try {
             this.statement.executeUpdate(query);
             return "Successfully executed insert query";

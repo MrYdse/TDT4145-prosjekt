@@ -3,8 +3,12 @@ package app;
 public final class Queries {
 
     // addUser
-    public static String NEW_USER(String name) {
-        return "INSERT INTO user (name) Values (" + name + ")";
+    public static String INSERT_USER(String name) {
+        return "INSERT INTO user (name) Values (" + name  +")";
+    }
+
+    public static String GET_USER_ID_BY_NAME(String name) {
+        return "SELECT uid FROM user WHERE navn = " + name;
     }
     /*
 	 * ================================ EXERCISES ===================================
@@ -43,9 +47,9 @@ public final class Queries {
     public static String GET_EXERCISE_BY_NAME(String name) {
         return "SELECT * FROM exercise WHERE name = " + name;
     }
-    /*
-	 * ================================ MACHINES ===================================
-	 */
+/*
+* ================================ MACHINES ===================================
+*/
 
     public static String GET_ALL_MACHINES() {
         return "SELECT * FROM machine";
