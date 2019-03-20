@@ -55,7 +55,7 @@ public class UI extends Sql {
 
           if (args.size() == 2){
             switch(args.get(0)) {
-            case "adduser": addUser(args.get(1));
+            case "adduser": print(addUser(args.get(1)));
                             break;
             case "addexercisegroup": print(addExerciseGroup(args.get(1)));
                             break;

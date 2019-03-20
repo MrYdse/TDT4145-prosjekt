@@ -1,6 +1,6 @@
-create table user (
+create table exuser (
 	uid integer not null auto_increment,
-    name varchar(45),
+    username varchar(45),
     primary key (uid)
 );
 
@@ -18,7 +18,7 @@ create table userworkedout (
 	uid integer not null,
     wid integer not null,
     primary key (uid, wid),
-    foreign key (uid) references user(uid)
+    foreign key (uid) references exuser(uid)
 		on update cascade
         on delete cascade,
     foreign key (wid) references workout(wid)
