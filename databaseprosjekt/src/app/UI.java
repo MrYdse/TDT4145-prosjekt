@@ -31,11 +31,11 @@ public class UI extends Sql {
         
     }
 
-    private void addExercise(String type, String eafa) {
+    private void addExercise(String type, String name) {
         
     }
 
-    private void connectExerciseToGroup() {
+    private void connectExerciseToGroup(String exerciseID) {
 
     }
 
