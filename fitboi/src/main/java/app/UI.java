@@ -24,35 +24,46 @@ public class UI extends Sql {
         }
     }
 
-    private void addUser() {
+    /* ADDS */
+
+    private void addUser() {}
+
+    private void addMachine(String name, String functionDescription) {}
+
+    private void addMachineExercise(String machineID, String kilos, String sets) {}
+
+    private void addFreeExercise(String description) {}
+
+    private void addExercise(String type, String name, ArrayList<String> subCategoryParams) {}
+
+    private void addExerciseGroup(String name) {}
+
+    private void addWorkout(String date, String time, String note, String duration, String fitness, String performance) {}
+
+    /* CONNECTIONS */
+
+    private void connectExerciseToGroup(String exerciseID, String exerciseGroupID) {}
+
+    private void connectUserWorkout(String userID, String workoutID) {}
+
+    private void connectWorkoutExercise(String workoutID, String exerciseID) {}
+
+
+
+
+    /* LISTINGS */
+
+    private void listExerciseGroups() {
 
     }
 
-    private void addExerciseGroup(String name) {
+    private void listMachines() {
 
     }
 
-    private void addExercise(String type, String name, ArrayList<String> subCategoryParams) {
+    private void listExercises() {
 
     }
 
-    private void addFreeExercise(String description) {
-
-    }
-
-    private void addMachine(String name, String functionDescription) {
-
-    }
-
-    private void connectExerciseToGroup(String exerciseID) {
-
-    }
-
-    private void addMachineExercise(String machineID, String kilos, String sets) {
-
-    }
-
-    private String listExerciseGroups() {
-
-    }
+    private void list
 }
