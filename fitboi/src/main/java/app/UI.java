@@ -112,17 +112,13 @@ public class UI extends Sql {
 
     /* LISTINGS */
 
-    private void listExerciseGroups() {
+    private void listExerciseGroups() {}
 
-    }
+    private void listMachines() {}
 
-    private void listMachines() {
+    private void listExercises() {}
 
-    }
+    private void listWorkouts() {}
 
-    private void listExercises() {
-
-    }
-
-    private void list
+    private void list() {}
 }
