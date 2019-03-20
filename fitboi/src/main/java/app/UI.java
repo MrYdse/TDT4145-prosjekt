@@ -7,6 +7,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
+import sun.net.www.content.text.plain;
+
 public class UI extends Sql {
 
     private PrintStream printStream;
@@ -161,7 +163,7 @@ public class UI extends Sql {
         printStream.println(string);
     }
 
-    private void listWorkouts() {}
+    private void listUsersLastWorkouts(String userID, String n) {}
 
-    private void list() {}
+    private void listUsers() {}
 }
