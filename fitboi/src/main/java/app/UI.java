@@ -164,7 +164,7 @@ public class UI extends Sql {
 
     }
 
-    private void listPerformanceLastWeek(String username) {
+    private String listPerformanceLastWeek(String username) {
         // YYYY-MM-DD HH:MM:SS
         DateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
 
