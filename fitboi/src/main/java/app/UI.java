@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Date;
 
 import sun.net.www.content.text.plain;
 
@@ -161,7 +162,10 @@ public class UI extends Sql {
 
     }
 
-    private void listPerformanceLastWeek() {
-
+    private void listPerformanceLastWeek(String username) {
+        long DAY_IN_MS = 1000 * 60 * 60 * 24;
+        Date lastWeek = new Date(System.currentTimeMillis() - (7 * DAY_IN_MS));
+        String uid = super.executeReturnQuery(Queries.GET_USER_ID_BY_NAME(username));
+        return super.executeReturnQuery(Queries.GET_WORKOUT_PERFORMANCE_LAST_WEEK(uid, lastWeek));
     }
 }
