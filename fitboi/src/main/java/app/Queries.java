@@ -1,5 +1,4 @@
 package app;
-
 public final class Queries {
 
     // addUser
@@ -107,4 +106,8 @@ public final class Queries {
                 + " AND exercise.wid = " + eid + ";";
 	}
 
+    public static String GET_WORKOUT_PERFORMANCE_LAST_WEEK(String uid, String oneWeekAgoDatetime) {
+        return "SELECT datetime, performance FROM workout NATURAL JOIN exuser"
+                + "WHERE datetime > " + oneWeekAgoDatetime + " AND exuser.uid = " + uid + ";";
+    }
 }
