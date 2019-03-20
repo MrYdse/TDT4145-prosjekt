@@ -22,4 +22,28 @@ public final class Queries {
         return "INSERT INTO exerciseispartofgroup (eid, egid) VALUES (\"" + exerciseId + "\", \"" + exerciseGroupId + "\")";
     }
 
+    /*
+	 * ================================ MACHINES ===================================
+	 */
+
+    public static String GET_ALL_MACHINES() {
+        return "SELECT * FROM machine";
+    }
+
+    public static String GET_ALL_MACHINE_BY_ID(int id) {
+        return "SELECT * FROM machine WHERE mid = " + id;
+    }
+
+    public static String GET_MACHINE_BY_NAME(String name) {
+        return "SELECT * FROM machine WHERE name = " + name;
+    }
+
+    public static String GET_MACHINE_ID_BY_NAME(String name) {
+        return "SELECT mid FROM machine WHERE navn = " + name;
+    }
+
+    public static String INSERT_MACHINE(String name, String description) {
+        return "INSERT INTO machine (name, functiondescription) VALUES (" + name +", " + description + ")";
+    }
+
 }
