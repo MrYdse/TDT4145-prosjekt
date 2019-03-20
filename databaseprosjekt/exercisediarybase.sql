@@ -6,7 +6,7 @@ create table exuser (
 
 create table workout (
 	wid integer not null auto_increment,
-    datetime datetime,
+    wodatetime datetime,
     note text,
     duration integer unsigned,
     fitness tinyint check (fitness between 1 and 10),

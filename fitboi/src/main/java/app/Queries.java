@@ -76,15 +76,15 @@ public final class Queries {
 */
 
     public static String GET_ALL_WORKOUTS() {
-        return "SELECT wid, date, time, note, duration, fitness, perfomance FROM workout;";
+        return "SELECT wid, wodatetime, note, duration, fitness, perfomance FROM workout;";
     }
 
     public static String GET_ALL_WORKOUTS_FOR_USER(int uid) {
-        return "SELECT wid, date, time, note, duration, fitness, perfomance FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + uid + ";";
+        return "SELECT wid, wodatetime, note, duration, fitness, perfomance FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + uid + ";";
     }
 
     public static String INSERT_WORKOUT(String datetime, String note, int duration, int fitness, int perfomance) {
-        return "INSERT INTO workout (datetime, note, duration, fitness, performance) VALUES"
+        return "INSERT INTO workout (wodatetime, note, duration, fitness, performance) VALUES"
         + "(\"" + datetime + "\", \"" + note + "\", \"" + duration + "\", \"" + fitness + "\", \"" + perfomance + "\");";
     }
 
