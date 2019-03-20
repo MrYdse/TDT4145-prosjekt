@@ -37,7 +37,7 @@ public class UI extends Sql {
     }
 
     public void handleInput(String input) {
-        ArrayList<String> args = new ArrayList<String>(Arrays.asList(input.toLowerCase().split(" ")));
+        ArrayList<String> args = new ArrayList<String>(Arrays.asList(input.toLowerCase().replaceAll("\\s+","").split("-")));
           if (args.size() == 1){
             switch(args.get(0)) {
             case "help":    for (Map.Entry<String, String> entry : methods.entrySet()) {
@@ -57,8 +57,6 @@ public class UI extends Sql {
                             break;
             case "addexercisegroup": print(addExerciseGroup(args.get(1)));
                             break;
-            case "addfreeexercise": print(addFreeExercise(args.get(1)));
-                            break;
             default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
                             break;
             }
@@ -70,6 +68,8 @@ public class UI extends Sql {
                             break;
             case "connectexercisetogroup": print(connectExerciseToGroup(args.get(1), args.get(2)));
                             break;
+            case "addfreeexercise": print(addFreeExercise(args.get(1), args.get(2)));
+                            break;
             default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
                             break;
             }
@@ -77,9 +77,7 @@ public class UI extends Sql {
 
           if (args.size() == 4){
             switch(args.get(0)) {
-              case "addmachineexercise": print(addMachineExercise(args.get(1), args.get(2), args.get(3)));
-                              break;
-              case "addexercise": print(addExercise(args.get(1), args.get(2), new ArrayList<String>(Arrays.asList(args.get(3)))));
+              case "addmachineexercise": print(addMachineExercise(args.get(1), args.get(2), args.get(3), input));
                               break;
               default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
                               break;
@@ -98,14 +96,14 @@ public class UI extends Sql {
 
     /* ADDS */
 
-    private String addMachineExercise(String name, int machineID, int kilos, int sets) {
+    private String addMachineExercise(String name, String sets, String machineID, String kilos) {
         return super.executeInsertQuery(Queries.INSERT_MACHINE_EXERCISE(name, kilos, sets, machineID));
     }
     private String addUser(String name) {
         return super.executeInsertQuery(Queries.INSERT_USER(name));
     }
 
-    private String addFreeExercise(String description) {
+    private String addFreeExercise(String name, String description) {
         return super.executeInsertQuery(Queries.INSERT_FREE_EXERCISE(name, description));
     }
 
@@ -113,7 +111,7 @@ public class UI extends Sql {
         return super.executeInsertQuery(Queries.INSERT_MACHINE(name, functionDescription));
     }
 
-    private String addWorkout(String datetime, String note, int duration, int fitness, int perfomance) {
+    private String addWorkout(String datetime, String note, String duration, String fitness, String perfomance) {
         return super.executeInsertQuery(Queries.INSERT_WORKOUT(datetime, note, duration, fitness, perfomance));
     }
 
@@ -121,17 +119,14 @@ public class UI extends Sql {
         return super.executeInsertQuery(Queries.INSERT_USER_WORKED_OUT(uid, wid));
     }
 
-    private String connectWorkoutExercise(int wid, int eid) {
-        return super.executeInsertQuery(Queries.CONNECT_WORKOUT_EXERCISE(wid, eid));
-    }
     private String addExerciseGroup(String name) {
         return super.executeInsertQuery(Queries.INSERT_EXERCISE_GROUP(name));
     }
 
     /* CONNECTIONS */
 
-    private String connectExerciseToGroup(int exerciseID, int exerciseGroupID) {
-        return super.executeInsertQuery(Queries.CONNECT_EXERCISE_TO_GROUP(exerciseID, exerciseGroupID));
+    private String connectExerciseToGroup(String string, String string2) {
+        return super.executeInsertQuery(Queries.CONNECT_EXERCISE_TO_GROUP(string, string2));
     }
 
     private String connectUserWorkout(int userID, int workoutID) {
