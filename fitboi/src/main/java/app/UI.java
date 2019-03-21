@@ -39,81 +39,107 @@ public class UI extends Sql {
         methods.put("'List machines'", "Syntax: listMachines");
         methods.put("'List exercises'", "Syntax: listExercises");
         methods.put("'List workouts'", "Syntax: listWorkouts");
-        //methods.put("''", "Syntax: ");
+        // methods.put("''", "Syntax: ");
     }
 
     public void handleInput(String input) {
-        ArrayList<String> args = new ArrayList<String>(Arrays.asList(input.toLowerCase().replaceAll("\\s+","").split("-")));
-          if (args.size() == 1){
-            switch(args.get(0)) {
-            case "help":    for (Map.Entry<String, String> entry : methods.entrySet()) {
-                                  System.out.printf(format, entry.getKey(), entry.getValue());
-                            }
-                            break;
-            case "listexercisegroups": print(listExerciseGroups());
-                            break;
-            case "listexercises": print(listExercises());
-                            break;
-            case "listmachines": print(listMachines());
-                            break;
-            default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
-                            break;
+        ArrayList<String> args = new ArrayList<String>(
+                Arrays.asList(input.toLowerCase().replaceAll("\\s+", "").split("-")));
+        if (args.size() == 1) {
+            switch (args.get(0)) {
+            case "help":
+                for (Map.Entry<String, String> entry : methods.entrySet()) {
+                    System.out.printf(format, entry.getKey(), entry.getValue());
+                }
+                break;
+            case "listexercisegroups":
+                print(listExerciseGroups());
+                break;
+            case "listexercises":
+                print(listExercises());
+                break;
+            case "listmachines":
+                print(listMachines());
+                break;
+            default:
+                System.out.println(
+                        "Is your method in the method list, and/or have you specified the required arguments?");
+                break;
             }
-          }
-
-          if (args.size() == 2){
-            switch(args.get(0)) {
-            case "adduser": print(addUser(args.get(1)));
-                            break;
-            case "addexercisegroup": print(addExerciseGroup(args.get(1)));
-                            break;
-            case "whois": print(whoIsUsername(args.get(1)));
-                            break;
-            default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
-                            break;
-            }
-          }
-
-          if (args.size() == 3){
-            switch(args.get(0)) {
-            case "addmachine": print(addMachine(args.get(1), args.get(2)));
-                            break;
-            case "connectexercisetogroup": print(connectExerciseToGroup(args.get(1), args.get(2)));
-                            break;
-            case "addfreeexercise": print(addFreeExercise(args.get(1), args.get(2)));
-                            break;
-            case "connectuserworkoout": print(connectUserWorkout(args.get(1), args.get(2)));
-                            break;
-            case "connectworkoutexercise": print(connectWorkoutExercise(args.get(1), args.get(2)));
-            default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
-                            break;
-            }
-          }
-
-          if (args.size() == 4){
-            switch(args.get(0)) {
-              case "addmachineexercise": print(addMachineExercise(args.get(1), args.get(2), args.get(3), input));
-                              break;
-              default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
-                              break;
-            }
-          }
-
-        if (args.size() > 4){
-            switch(args.get(0)) {
-            case "addworkout": print(addWorkout(args.get(1), args.get(2), args.get(3), args.get(4), args.get(5)));
-                              break;
-            default: System.out.println("Is your method in the method list, and/or have you specified the required arguments?");
-                            break;
-            }
-          }
         }
+
+        if (args.size() == 2) {
+            switch (args.get(0)) {
+            case "adduser":
+                print(addUser(args.get(1)));
+                break;
+            case "addexercisegroup":
+                print(addExerciseGroup(args.get(1)));
+                break;
+            case "whois":
+                print(whoIsUsername(args.get(1)));
+                break;
+            default:
+                System.out.println(
+                        "Is your method in the method list, and/or have you specified the required arguments?");
+                break;
+            }
+        }
+
+        if (args.size() == 3) {
+            switch (args.get(0)) {
+            case "addmachine":
+                print(addMachine(args.get(1), args.get(2)));
+                break;
+            case "connectexercisetogroup":
+                print(connectExerciseToGroup(args.get(1), args.get(2)));
+                break;
+            case "addfreeexercise":
+                print(addFreeExercise(args.get(1), args.get(2)));
+                break;
+            case "connectuserworkoout":
+                print(connectUserWorkout(args.get(1), args.get(2)));
+                break;
+            case "connectworkoutexercise":
+                print(connectWorkoutExercise(args.get(1), args.get(2)));
+            default:
+                System.out.println(
+                        "Is your method in the method list, and/or have you specified the required arguments?");
+                break;
+            }
+        }
+
+        if (args.size() == 4) {
+            switch (args.get(0)) {
+            case "addmachineexercise":
+                print(addMachineExercise(args.get(1), args.get(2), args.get(3), input));
+                break;
+            default:
+                System.out.println(
+                        "Is your method in the method list, and/or have you specified the required arguments?");
+                break;
+            }
+        }
+
+        if (args.size() > 4) {
+            switch (args.get(0)) {
+            case "addworkout":
+                print(addWorkout(args.get(1), args.get(2), args.get(3), args.get(4), args.get(5)));
+                break;
+            default:
+                System.out.println(
+                        "Is your method in the method list, and/or have you specified the required arguments?");
+                break;
+            }
+        }
+    }
 
     /* ADDS */
 
     private String addMachineExercise(String name, String sets, String machineID, String kilos) {
         return super.executeInsertQuery(Queries.INSERT_MACHINE_EXERCISE(name, kilos, sets, machineID));
     }
+
     private String addUser(String name) {
         return super.executeInsertQuery(Queries.INSERT_USER(name));
     }
@@ -129,7 +155,6 @@ public class UI extends Sql {
     private String addWorkout(String datetime, String note, String duration, String fitness, String perfomance) {
         return super.executeInsertQuery(Queries.INSERT_WORKOUT(datetime, note, duration, fitness, perfomance));
     }
-
 
     private String addExerciseGroup(String name) {
         return super.executeInsertQuery(Queries.INSERT_EXERCISE_GROUP(name));
@@ -149,9 +174,6 @@ public class UI extends Sql {
         return super.executeInsertQuery(Queries.CONNECT_WORKOUT_EXERCISE(workoutID, exerciseID));
     }
 
-
-
-
     /* LISTINGS */
 
     private String listExerciseGroups() {
@@ -162,8 +184,8 @@ public class UI extends Sql {
             ResultSet rs = (ResultSet) response;
             String out = "";
             try {
-                while(rs.next()) {
-                    out += "Exercise Group ID: " + rs.getString("egid") + " Name: " + rs.getString("name") +"\n";
+                while (rs.next()) {
+                    out += "Exercise Group ID: " + rs.getString("egid") + " Name: " + rs.getString("name") + "\n";
                 }
             } catch (Exception e) {
                 out = "Failed to read resultset with error: " + e.getMessage();
@@ -186,8 +208,9 @@ public class UI extends Sql {
             ResultSet rs = (ResultSet) response;
             String out = "";
             try {
-                while(rs.next()) {
-                    out += "Machine ID: " + rs.getString("mid") + " Name: " + rs.getString("name") + " Description: " + rs.getString("functiondescription") + "\n";
+                while (rs.next()) {
+                    out += "Machine ID: " + rs.getString("mid") + " Name: " + rs.getString("name") + " Description: "
+                            + rs.getString("functiondescription") + "\n";
                 }
             } catch (Exception e) {
                 out = "Failed to read resultset with error: " + e.getMessage();
@@ -210,8 +233,9 @@ public class UI extends Sql {
         } else {
             ResultSet rs = (ResultSet) response;
             try {
-                while(rs.next()) {
-                    out += "Exercise ID: " + rs.getString("eid") + " Name: " + rs.getString("name") + " Description: " + rs.getString("functiondescription") + "\n";
+                while (rs.next()) {
+                    out += "Exercise ID: " + rs.getString("eid") + " Name: " + rs.getString("name") + " Description: "
+                            + rs.getString("functiondescription") + "\n";
                 }
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
@@ -230,8 +254,10 @@ public class UI extends Sql {
         } else {
             ResultSet rs = (ResultSet) response;
             try {
-                while(rs.next()) {
-                    out += "Exercise ID: " + rs.getString("eid") + " Name: " + rs.getString("exercise.name") + " Machine name: "+ rs.getString("machine.name") + " Kilos: " + rs.getString("kilos") + rs.getString("sets") + "\n";
+                while (rs.next()) {
+                    out += "Exercise ID: " + rs.getString("eid") + " Name: " + rs.getString("exercise.name")
+                            + " Machine name: " + rs.getString("machine.name") + " Kilos: " + rs.getString("kilos")
+                            + rs.getString("sets") + "\n";
                 }
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
@@ -254,8 +280,10 @@ public class UI extends Sql {
             ResultSet rs = (ResultSet) response;
             String out = "";
             try {
-                while(rs.next()) {
-                    out += "User ID: " + rs.getString("uid") + " Date: " + rs.getString("wodatetime") + " Note: " + rs.getString("note") + rs.getString("duration") + rs.getString("fitness") + rs.getString("performance") + "\n";
+                while (rs.next()) {
+                    out += "User ID: " + rs.getString("uid") + " Date: " + rs.getString("wodatetime") + " Note: "
+                            + rs.getString("note") + rs.getString("duration") + rs.getString("fitness")
+                            + rs.getString("performance") + "\n";
                 }
             } catch (Exception e) {
                 out = "Failed to read resultset with error: " + e.getMessage();
@@ -278,7 +306,7 @@ public class UI extends Sql {
             ResultSet rs = (ResultSet) response;
             String out = "";
             try {
-                while(rs.next()) {
+                while (rs.next()) {
                     out += "User ID: " + rs.getString("uid") + " Name: " + rs.getString("name") + "\n";
                 }
             } catch (Exception e) {
@@ -320,7 +348,7 @@ public class UI extends Sql {
             ResultSet rs = (ResultSet) response;
             String out = "";
             try {
-                while(rs.next()) {
+                while (rs.next()) {
                     out += "User ID: " + rs.getString("uid") + " Name: " + rs.getString("name") + "\n";
                 }
             } catch (Exception e) {
@@ -336,6 +364,7 @@ public class UI extends Sql {
         }
     }
 
+
     private String listPerformanceLastWeek(String username) {
         // YYYY-MM-DD HH:MM:SS
         DateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
@@ -344,18 +373,20 @@ public class UI extends Sql {
         Date lastWeek = new Date(System.currentTimeMillis() - (7 * DAY_IN_MS));
         String uid = whoIsUsername(username);
         String result = "";
-        ResultSet rs = (ResultSet) super.executeReturnQuery(Queries.GET_WORKOUT_PERFORMANCE_LAST_WEEK(uid, format.format(lastWeek)));
+        ResultSet rs = (ResultSet) super.executeReturnQuery(
+                    Queries.GET_WORKOUT_PERFORMANCE_LAST_WEEK(uid, format.format(lastWeek)));
         try {
-            while(rs.next()) {
-                result += "Datetime: " + rs.getString("datetime") + ", Performance: " + rs.getString("performance") + "\n";
+            while (rs.next()) {
+                result += "Datetime: " + rs.getString("datetime") + ", Performance: " + rs.getString("performance")
+                        + "\n";
             }
         } catch (Exception e) {
-            result = "Could not get last week's performance";
+            result = "Could not get last week's performance: " + e.getMessage();
         } finally {
             try {
                 rs.close();
             } catch (Exception e) {
-                return "Failed to close resultset with error: " + e.getMessage();
+                result = "Failed to close resultset with error: " + e.getMessage();
             }
         }
         return result;
@@ -365,19 +396,20 @@ public class UI extends Sql {
 
     private String whoIsUsername(String username) {
         ResultSet rs = (ResultSet) super.executeReturnQuery(Queries.GET_USER_ID_BY_NAME(username));
+        String result = "";
         try {
             rs.next();
-            String result = "" + rs.getString("uid");
-            return result;
+            result += rs.getString("uid");
         } catch (Exception e) {
-            return "Could not get user id from username";
-        }finally {
+            result = "Could not get user id from username";
+        } finally {
             try {
                 rs.close();
             } catch (Exception e) {
-                return "Failed to close resultset with error: " + e.getMessage();
+                result = "Failed to close resultset with error: " + e.getMessage();
             }
         }
+        return result;
     }
 
     private void print(String string) {
