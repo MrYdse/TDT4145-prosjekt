@@ -162,10 +162,16 @@ public class UI extends Sql {
                 while(rs.next()) {
                     out += "Exercise Group ID: " + rs.getString("egid") + " Name: " + rs.getString("name") +"\n";
                 }
-                return out;
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
-            }  
+            } finally {
+                try {
+                    rs.close();
+                    return out;
+                } catch (Exception e) {
+                    return "Failed to close resultset with error: " + e.getMessage();
+                }
+            }
         } 
     }
 
@@ -180,10 +186,16 @@ public class UI extends Sql {
                 while(rs.next()) {
                     out += "Machine ID: " + rs.getString("mid") + " Name: " + rs.getString("name") + " Description: " + rs.getString("functiondescription") + "\n";
                 }
-                return out;
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
-            }  
+            } finally {
+                try {
+                    rs.close();
+                    return out;
+                } catch (Exception e) {
+                    return "Failed to close resultset with error: " + e.getMessage();
+                }
+            }
         }
     }
 
@@ -200,6 +212,12 @@ public class UI extends Sql {
                 }
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
+            }finally {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    return "Failed to close resultset with error: " + e.getMessage();
+                }
             }
         }
         out += "Machine exercices:\n";
@@ -214,6 +232,12 @@ public class UI extends Sql {
                 }
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
+            } finally {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    return "Failed to close resultset with error: " + e.getMessage();
+                }
             }
         }
         return out;
@@ -230,10 +254,16 @@ public class UI extends Sql {
                 while(rs.next()) {
                     out += "User ID: " + rs.getString("uid") + " Date: " + rs.getString("wodatetime") + " Note: " + rs.getString("note") + rs.getString("duration") + rs.getString("fitness") + rs.getString("performance") + "\n";
                 }
-                return out;
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
-            }  
+            } finally {
+                try {
+                    rs.close();
+                    return out;
+                } catch (Exception e) {
+                    return "Failed to close resultset with error: " + e.getMessage();
+                }
+            }
         }
     }
 
@@ -248,10 +278,16 @@ public class UI extends Sql {
                 while(rs.next()) {
                     out += "User ID: " + rs.getString("uid") + " Name: " + rs.getString("name") + "\n";
                 }
-                return out;
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
-            }  
+            } finally {
+                try {
+                    rs.close();
+                    return out;
+                } catch (Exception e) {
+                    return "Failed to close resultset with error: " + e.getMessage();
+                }
+            }
         }
     }
 
@@ -266,7 +302,13 @@ public class UI extends Sql {
                 egid = rs.getString("egid");
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
-            }  
+            } finally {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    return "Failed to close resultset with error: " + e.getMessage();
+                }
+            }
         }
         response = super.executeReturnQuery(Queries.GET_ALL_EXERCISES_IN_GROUP(egid));
         if (response instanceof String) {
@@ -278,10 +320,17 @@ public class UI extends Sql {
                 while(rs.next()) {
                     out += "User ID: " + rs.getString("uid") + " Name: " + rs.getString("name") + "\n";
                 }
-                return out;
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
-            }  
+            } finally {
+                try {
+                    rs.close();
+                    return out;
+                } catch (Exception e) {
+                    return "Failed to close resultset with error: " + e.getMessage();
+                }
+            }
+            }
         }
     }
 
@@ -300,6 +349,12 @@ public class UI extends Sql {
             }
         } catch (Exception e) {
             result = "Could not get last week's performance";
+        } finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                return "Failed to close resultset with error: " + e.getMessage();
+            }
         }
         return result;
     }
@@ -314,6 +369,12 @@ public class UI extends Sql {
             return result;
         } catch (Exception e) {
             return "Could not get user id from username";
+        }finally {
+            try {
+                rs.close();
+            } catch (Exception e) {
+                return "Failed to close resultset with error: " + e.getMessage();
+            }
         }
     }
 
