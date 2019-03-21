@@ -48,7 +48,7 @@ public class UI extends Sql {
         methods.put("'List workouts'", "Syntax: listWorkouts");
         methods.put("'List users'", "Syntax: listUsers");
         methods.put("'List Workouts By Exercise In DateRange'", "Syntax: listWorkoutsByExerciseInDateRange /<exerciseID> /<interval start> /<interval end>");
-        methos.put("'Exit the program'", "Syntax: exit");
+        methods.put("'Exit the program'", "Syntax: exit");
 
         // methods.put("''", "Syntax: ");
     }
