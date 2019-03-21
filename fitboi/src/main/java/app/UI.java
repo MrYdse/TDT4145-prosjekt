@@ -41,9 +41,10 @@ public class UI extends Sql {
         methods.put("'Connect user workout'", "Syntax: ConnectUserWorkout /<userID> /<workoutID>");
         methods.put("'Connect workout exercise'", "Syntax: ConnectWorkoutExercise /<workoutID> /<exerciseID>");
         methods.put("'List exercise groups'", "Syntax: listExerciseGroups");
-        methods.put("'List exercises in gruop'", "Syntax: listExercisesInGroup /<groupname>");
-        methods.put("'List user performace for last week'", "Syntax: listPerformanceLastWeek /<username>");
-        methods.put("'List users n last workouts'", "Syntac: listUsersLastWorkouts /<userID> /<n>");
+        methods.put("'List exercises in group'", "Syntax: listExercisesInGroup /<groupname>");
+        methods.put("'List user performace for last week'", "Syntax: listPerformanceLastWeek /<userID>");
+        methods.put("'List user's n last workouts'", "Syntax: listUsersLastWorkouts /<userID> /<n>");
+        methods.put("'List all user's workouts'", "Syntax: listAllUserWorkouts /<userID>");
         methods.put("'List machines'", "Syntax: listMachines");
         methods.put("'List exercises'", "Syntax: listExercises");
         methods.put("'List workouts'", "Syntax: listWorkouts");
@@ -140,10 +141,10 @@ public class UI extends Sql {
             }
         }
 
-        if (args.size() == 4) {
+        if (args.size() == 5) {
             switch (args.get(0)) {
             case "addmachineexercise": case "ame":
-                print(addMachineExercise(args.get(1), args.get(2), args.get(3), input));
+                print(addMachineExercise(args.get(1), args.get(2), args.get(3), args.get(4)));
                 break;
             default:
                 System.out.println(
@@ -168,7 +169,9 @@ public class UI extends Sql {
     /* ADDS */
 
     private String addMachineExercise(String name, String sets, String machineID, String kilos) {
-        return super.executeInsertQuery(Queries.INSERT_MACHINE_EXERCISE(name, kilos, sets, machineID));
+        String result = super.executeInsertQuery(Queries.INSERT_MACHINE_EXERCISE_1(name)) + "\n";
+        result += super.executeInsertQuery(Queries.INSERT_MACHINE_EXERCISE_2(kilos, sets, machineID));
+        return result;
     }
 
     private String addUser(String name) {
@@ -181,7 +184,9 @@ public class UI extends Sql {
     }
 
     private String addFreeExercise(String name, String description) {
-        return super.executeInsertQuery(Queries.INSERT_FREE_EXERCISE(name, description));
+        String result = super.executeInsertQuery(Queries.INSERT_FREE_EXERCISE_1(name)) + "\n";
+        result += super.executeInsertQuery(Queries.INSERT_FREE_EXERCISE_2(description));
+        return result;
     }
 
     private String addMachine(String name, String functionDescription) {
@@ -198,12 +203,12 @@ public class UI extends Sql {
 
     /* CONNECTIONS */
 
-    private String connectExerciseToGroup(String string, String string2) {
-        return super.executeInsertQuery(Queries.CONNECT_EXERCISE_TO_GROUP(string, string2));
+    private String connectExerciseToGroup(String eid, String egid) {
+        return super.executeInsertQuery(Queries.CONNECT_EXERCISE_TO_GROUP(eid, egid));
     }
 
-    private String connectUserWorkout(String string, String string2) {
-        return super.executeInsertQuery(Queries.INSERT_USER_WORKED_OUT(string, string2));
+    private String connectUserWorkout(String uid, String wid) {
+        return super.executeInsertQuery(Queries.INSERT_USER_WORKED_OUT(uid, wid));
     }
 
     private String connectWorkoutExercise(String workoutID, String exerciseID) {
@@ -271,7 +276,7 @@ public class UI extends Sql {
             try {
                 while (rs.next()) {
                     out += "Exercise ID: " + rs.getString("eid") + " Name: " + rs.getString("name") + " Description: "
-                            + rs.getString("functiondescription") + "\n";
+                            + rs.getString("description") + "\n";
                 }
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
@@ -283,7 +288,7 @@ public class UI extends Sql {
                 }
             }
         }
-        out += "Machine exercices:\n";
+        out += "Machine exercises:\n";
         response = super.executeReturnQuery(Queries.GET_ALL_MACHINE_EXERCISES());
         if (response instanceof String) {
             out = (String) response;
@@ -293,7 +298,7 @@ public class UI extends Sql {
                 while (rs.next()) {
                     out += "Exercise ID: " + rs.getString("eid") + " Name: " + rs.getString("exercise.name")
                             + " Machine name: " + rs.getString("machine.name") + " Kilos: " + rs.getString("kilos")
-                            + rs.getString("sets") + "\n";
+                            + " Sets: " + rs.getString("sets") + "\n";
                 }
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
@@ -392,6 +397,7 @@ public class UI extends Sql {
         } else {
             ResultSet rs = (ResultSet) response;
             try {
+                rs.next();
                 egid = rs.getString("egid");
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
@@ -403,6 +409,7 @@ public class UI extends Sql {
                 }
             }
         }
+        print("Found group " + egid);
         response = super.executeReturnQuery(Queries.GET_ALL_EXERCISES_IN_GROUP(egid));
         if (response instanceof String) {
             return (String) response;
@@ -411,7 +418,7 @@ public class UI extends Sql {
             String out = "";
             try {
                 while (rs.next()) {
-                    out += "User ID: " + rs.getString("uid") + " Name: " + rs.getString("name") + "\n";
+                    out += "Exercise: " + rs.getString("e.name") + "\n";
                 }
             } catch (Exception e) {
                 return "Failed to read resultset with error: " + e.getMessage();
@@ -427,14 +434,13 @@ public class UI extends Sql {
     }
 
 
-    private String listPerformanceLastWeek(String username) {
+    private String listPerformanceLastWeek(String uid) {
         // YYYY-MM-DD HH:MM:SS
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         LocalDate dateNow = LocalDate.now();
         LocalDate lastWeek = LocalDate.of(dateNow.getYear(), dateNow.getMonthValue(), dateNow.getDayOfMonth() - 7);
         print(dtf.format(lastWeek));
-        String uid = whoIsUsername(username);
 
         Object response = super.executeReturnQuery(
             Queries.GET_WORKOUT_PERFORMANCE_LAST_WEEK(uid, dtf.format(lastWeek)));
