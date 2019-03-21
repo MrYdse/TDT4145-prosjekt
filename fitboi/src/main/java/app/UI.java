@@ -315,8 +315,8 @@ public class UI extends Sql {
             try {
                 while (rs.next()) {
                     out += "User ID: " + rs.getString("uid") + " Date: " + rs.getString("wodatetime") + " Note: "
-                            + rs.getString("note") + rs.getString("duration") + rs.getString("fitness")
-                            + rs.getString("performance") + "\n";
+                            + rs.getString("note") +" Duration: " + rs.getString("duration") + " Fitness: " + rs.getString("fitness")
+                            + " Performance: " + rs.getString("performance") + "\n";
                 }
             } catch (Exception e) {
                 out = "Failed to read resultset with error: " + e.getMessage();
@@ -341,8 +341,8 @@ public class UI extends Sql {
             try {
                 while (rs.next()) {
                     out += "User ID: " + rs.getString("uid") + " Date: " + rs.getString("wodatetime") + " Note: "
-                            + rs.getString("note") + rs.getString("duration") + rs.getString("fitness")
-                            + rs.getString("performance") + "\n";
+                            + rs.getString("note") +" Duration: " + rs.getString("duration") + " Fitness: " + rs.getString("fitness")
+                            + " Performance: " + rs.getString("performance") + "\n";
                 }
             } catch (Exception e) {
                 out = "Failed to read resultset with error: " + e.getMessage();

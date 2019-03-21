@@ -104,7 +104,7 @@ public final class Queries {
     }
 
     public static String GET_ALL_WORKOUTS_FOR_USER(String userID) {
-        return "SELECT wid, wodatetime, note, duration, fitness, performance FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + userID + ";";
+        return "SELECT uid, wid, wodatetime, note, duration, fitness, performance FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + userID + ";";
     }
 
     public static String INSERT_WORKOUT(String datetime, String note, String duration, String fitness, String perfomance) {
