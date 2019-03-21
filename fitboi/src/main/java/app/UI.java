@@ -16,8 +16,6 @@ import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 
 import java.util.Date;
 
-import sun.net.www.content.text.plain;
-
 public class UI extends Sql {
 
     private PrintStream printStream;
