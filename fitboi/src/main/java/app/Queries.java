@@ -24,13 +24,13 @@ public final class Queries {
     //addFreeExercise
     public static String INSERT_FREE_EXERCISE(String name, String description) {
         return "INSERT INTO exercise (name) VALUES (\"" + name + "\");"
-            + "INSERT INTO freeexercise (eid, description) Values ((SELECT LAST_INSERT_ID() FROM exercise), " + description + "\");";
+            + "INSERT INTO freeexercise (eid, description) Values ((SELECT LAST_INSERT_ID() FROM exercise), \"" + description + "\");";
     }
 
     //addMachineExercise
     public static String INSERT_MACHINE_EXERCISE(String name, String kilos, String sets, String machineID) {
         return "INSERT INTO exercise (name) VALUES (\"" + name + "\");"
-            + "INSERT INTO machineexercise (eid, kilos, sets, mid) Values ((SELECT LAST_INSERT_ID() FROM exercise), \"" + kilos + "\", \"" + sets + "\", \"" + machineID + "\");";
+            + "INSERT INTO machineexercise (eid, kilos, sets, mid) Values ((SELECT LAST_INSERT_ID() FROM exercise), " + kilos + ", " + sets + ", " + machineID + ");";
     }
 
     //addExerciseGroup
@@ -43,8 +43,8 @@ public final class Queries {
     }
 
     //connectExerciseToGroup
-    public static String CONNECT_EXERCISE_TO_GROUP(String string, String string2) {
-        return "INSERT INTO exerciseispartofgroup (eid, egid) VALUES (\"" + string + "\", \"" + string2 + "\");";
+    public static String CONNECT_EXERCISE_TO_GROUP(String eid, String egid) {
+        return "INSERT INTO exerciseispartofgroup (eid, egid) VALUES (" + eid + ", " + egid + ");";
     }
 
     public static String GET_ALL_FREE_EXERCISES() {
@@ -68,7 +68,7 @@ public final class Queries {
     }
 
     public static String GET_ALL_EXERCISES_IN_GROUP(String egid) {
-        return "SELECT * FROM (exercise NATURAL JOIN (SELECT * FROM exercisegroup where egid = \"" +  egid + "\"));";
+        return "SELECT * FROM (exercise NATURAL JOIN (SELECT * FROM exercisegroup where egid = " +  egid + "));";
     }
 
 /*
@@ -109,15 +109,15 @@ public final class Queries {
 
     public static String INSERT_WORKOUT(String datetime, String note, String duration, String fitness, String perfomance) {
         return "INSERT INTO workout (wodatetime, note, duration, fitness, performance) VALUES"
-        + "(\"" + datetime + "\", \"" + note + "\", \"" + duration + "\", \"" + fitness + "\", \"" + perfomance + "\");";
+        + "(\"" + datetime + "\", \"" + note + "\", " + duration + ", " + fitness + ", " + perfomance + ");";
     }
 
-    public static String INSERT_USER_WORKED_OUT(String string, String string2) {
-        return "INSERT INTO userworkedout (uid, wid) VALUES (\"" + string + "\", \"" + string2 + "\"\");";
+    public static String INSERT_USER_WORKED_OUT(String uid, String wid) {
+        return "INSERT INTO userworkedout (uid, wid) VALUES (" + uid + ", " + wid + ");";
     }
 
     public static String CONNECT_WORKOUT_EXERCISE(String workoutID, String exerciseID) {
-        return "INSERT INTO workoutcontains (wid, eid) VALUES (\"" + workoutID + "\", \"" + exerciseID + "\");";
+        return "INSERT INTO workoutcontains (wid, eid) VALUES (" + workoutID + ", " + exerciseID + ");";
     }
 
     public static String GET_N_LAST_WORKOUTS_FOR_USER(String n, String userID) {
