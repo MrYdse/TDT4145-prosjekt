@@ -21,7 +21,7 @@ public class UI extends Sql {
     private PrintStream printStream;
 
     private Map<String, String> methods = new LinkedHashMap<String, String>();
-    private String format = "%-40s%s%n";
+    private String format = "%-45s%s%n";
 
     public UI(PrintStream stream) {
         this.printStream = stream;
@@ -45,6 +45,7 @@ public class UI extends Sql {
         methods.put("'List all user's workouts'", "Syntax: listAllUserWorkouts /<userID>");
         methods.put("'List machines'", "Syntax: listMachines");
         methods.put("'List exercises'", "Syntax: listExercises");
+        methods.put("'List workouts by exercise in date range'", "Syntax: listWorkoutsByExerciseInDaterange /<exerciseID /<intervalStart>('yyyy-MM-dd') /<intervalEnd>('yyyy-MM-dd')");
         methods.put("'List workouts'", "Syntax: listWorkouts");
         methods.put("'List users'", "Syntax: listUsers");
 
@@ -140,7 +141,7 @@ public class UI extends Sql {
         }
         if (args.size() == 4) {
             switch(args.get(0)) {
-            case "listworkoutsbyexerciseindaterange": case "lwedr":
+            case "listworkoutsbyexerciseindaterange": case "lwbeid":
                 print(listWorkoutsByExerciseInDateRange(args.get(1), args.get(2), args.get(3)));
                 break;
             default:
