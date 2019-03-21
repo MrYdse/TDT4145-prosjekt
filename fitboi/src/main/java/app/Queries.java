@@ -158,7 +158,7 @@ public final class Queries {
 
     public static String GET_WORKOUT_BY_EXERCISE_AND_INTERVAL(String eid, String intervalStart, String intervalEnd) {
         return "SELECT * FROM workout NATURAL JOIN workoutcontains NATURAL JOIN exercise"
-         + "WHERE DATE(wodatetime) > \'" + intervalStart + "\' AND DATE(wodatetime) < \'" + intervalEnd + "\' AND exercise.eid = " + eid + ";";
+         + " WHERE DATE(wodatetime) > \'" + intervalStart + "\' AND DATE(wodatetime) < \'" + intervalEnd + "\' AND exercise.eid = " + eid + ";";
     }
 
     public static String GET_WORKOUT_PERFORMANCE_LAST_WEEK(String uid, String oneWeekAgoDatetime) {
