@@ -47,6 +47,7 @@ public class UI extends Sql {
         methods.put("'List exercises'", "Syntax: listExercises");
         methods.put("'List workouts'", "Syntax: listWorkouts");
         methods.put("'List users'", "Syntax: listUsers");
+        methods.put("'List Workouts By Exercise In DateRange'", "Syntax: listWorkoutsByExerciseInDateRange /<exerciseID> /<interval start> /<interval end>");
 
         // methods.put("''", "Syntax: ");
     }
