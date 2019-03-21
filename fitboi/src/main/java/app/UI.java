@@ -78,6 +78,7 @@ public class UI extends Sql {
                 print(listUsers());
                 break;
             case "exit":
+                System.exit(0);
                 break;
             default:
                 System.out.println(
