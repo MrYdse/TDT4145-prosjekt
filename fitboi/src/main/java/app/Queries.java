@@ -121,7 +121,7 @@ public final class Queries {
     }
 
     public static String GET_N_LAST_WORKOUTS_FOR_USER(String n, String userID) {
-		return "SELECT * FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + userID + " ORDER BY datetime DESC LIMIT " + n + ";";
+		return "SELECT * FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + userID + " ORDER BY wodatetime DESC LIMIT " + n + ";";
 
     }
 
@@ -132,7 +132,9 @@ public final class Queries {
 	}
 
     public static String GET_WORKOUT_PERFORMANCE_LAST_WEEK(String uid, String oneWeekAgoDatetime) {
-        return "SELECT datetime, performance FROM workout NATURAL JOIN exuser"
-                + "WHERE datetime > " + oneWeekAgoDatetime + " AND exuser.uid = " + uid + ";";
+        // SELECT * from workout natural join (select * from userworkedout natural join exuser where uid = 1)
+        // as uw where DATE(wodatetime) > '2019-03-18';
+        return "SELECT wodatetime, performance FROM workout NATURAL JOIN (SELECT * FROM userworkedout NATURAL JOIN exuser WHERE uid = "
+                + uid + ") AS uw WHERE DATE(wodatetime) > \'" + oneWeekAgoDatetime +"\';";
     }
 }
