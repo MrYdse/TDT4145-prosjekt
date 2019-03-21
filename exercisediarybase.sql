@@ -91,3 +91,6 @@ create table workoutcontains (
 		on update cascade
         on delete cascade
 );
+
+CREATE USER 'fitboi'@'localhost' IDENTIFIED BY '123'; 
+GRANT ALL PRIVILEGES ON * . * TO 'fitboi'@'localhost';
