@@ -140,6 +140,17 @@ public class UI extends Sql {
                 break;
             }
         }
+        if (args.size() == 4) {
+            switch(args.get(0)) {
+            case "listworkoutsbyexerciseindaterange": case "lwedr":
+                print(listWorkoutsByExerciseInDateRange(args.get(1), args.get(2), args.get(3)));
+                break;
+            default:
+                System.out.println(
+                        "Is your method in the method list, and/or have you specified the required arguments?");
+                break;
+            }
+        }
 
         if (args.size() == 5) {
             switch (args.get(0)) {
@@ -153,7 +164,7 @@ public class UI extends Sql {
             }
         }
 
-        if (args.size() > 4) {
+        if (args.size() > 5) {
             switch (args.get(0)) {
             case "addworkout": case "aw":
                 print(addWorkout(args.get(1), args.get(2), args.get(3), args.get(4), args.get(5)));
@@ -466,6 +477,32 @@ public class UI extends Sql {
             }
         }
         return result;
+    }
+
+    private String listWorkoutsByExerciseInDateRange(String exerciseID, String intervalStart, String intervalEnd) {
+        Object response = super.executeReturnQuery(Queries.GET_WORKOUT_BY_EXERCISE_AND_INTERVAL(exerciseID, intervalStart, intervalEnd));
+        String out = "";
+        if (response instanceof String) {
+            out = (String) response;
+        } else {
+            ResultSet rs = (ResultSet) response;
+            try {
+                while (rs.next()) {
+                    out += " Date: " + rs.getString("wodatetime") + " Note: "
+                        + rs.getString("note") + " Duration (seconds): " + rs.getString("duration") + " Fitness: " + rs.getString("fitness")
+                        + " Performance: " + rs.getString("performance") + " Exercise: " +rs.getString("exercise.name") + "\n";
+                }
+            } catch (Exception e) {
+                return "Could not get last week's performance: " + e.getMessage();
+            } finally {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    return "Failed to close resultset with error: " + e.getMessage();
+                }
+            }
+        }
+        return out;
     }
 
     /* TESTS */
