@@ -3,11 +3,14 @@ package app;
 import java.sql.*;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.time.format.DateTimeFormatter;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 
@@ -94,7 +97,7 @@ public class UI extends Sql {
             case "listexercisesingroup":
                 print(listExercisesInGroup(args.get(1)));
                 break;
-            case "listperformancelastweek":
+            case "listperformancelastweek": case "lplw":
                 print(listPerformanceLastWeek(args.get(1)));
                 break;
             default:
@@ -121,7 +124,7 @@ public class UI extends Sql {
             case "connectworkoutexercise":
                 print(connectWorkoutExercise(args.get(1), args.get(2)));
                 break;
-            case "listuserslastworkouts":
+            case "listuserslastworkouts": case "lulw":
                 print(listUsersLastWorkouts(args.get(1), args.get(2)));
                 break;
             default:
@@ -224,7 +227,7 @@ public class UI extends Sql {
                 }
             }
             return out;
-        } 
+        }
     }
 
     private String listMachines() {
@@ -309,8 +312,8 @@ public class UI extends Sql {
             try {
                 while (rs.next()) {
                     out += "User ID: " + rs.getString("uid") + " Date: " + rs.getString("wodatetime") + " Note: "
-                            + rs.getString("note") + rs.getString("duration") + rs.getString("fitness")
-                            + rs.getString("performance") + "\n";
+                            + rs.getString("note") + " Duration (seconds): " + rs.getString("duration") + " Fitness: " + rs.getString("fitness")
+                            + " Performance: " + rs.getString("performance") + "\n";
                 }
             } catch (Exception e) {
                 out = "Failed to read resultset with error: " + e.getMessage();
@@ -394,26 +397,34 @@ public class UI extends Sql {
 
     private String listPerformanceLastWeek(String username) {
         // YYYY-MM-DD HH:MM:SS
-        DateFormat format = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-        long DAY_IN_MS = 1000 * 60 * 60 * 24;
-        Date lastWeek = new Date(System.currentTimeMillis() - (7 * DAY_IN_MS));
+        LocalDate dateNow = LocalDate.now();
+        LocalDate lastWeek = LocalDate.of(dateNow.getYear(), dateNow.getMonthValue(), dateNow.getDayOfMonth() - 7);
+        print(dtf.format(lastWeek));
         String uid = whoIsUsername(username);
+
+        Object response = super.executeReturnQuery(
+            Queries.GET_WORKOUT_PERFORMANCE_LAST_WEEK(uid, dtf.format(lastWeek)));
+
         String result = "";
-        ResultSet rs = (ResultSet) super.executeReturnQuery(
-                    Queries.GET_WORKOUT_PERFORMANCE_LAST_WEEK(uid, format.format(lastWeek)));
-        try {
-            while (rs.next()) {
-                result += "Datetime: " + rs.getString("datetime") + ", Performance: " + rs.getString("performance")
-                        + "\n";
-            }
-        } catch (Exception e) {
-            result = "Could not get last week's performance: " + e.getMessage();
-        } finally {
+        if (response instanceof String) {
+            result = (String) response;
+        } else {
+            ResultSet rs = (ResultSet) response;
             try {
-                rs.close();
+                while (rs.next()) {
+                    result += "Date and time: " + rs.getString("wodatetime") + ", Performance: " + rs.getString("performance")
+                            + "\n";
+                }
             } catch (Exception e) {
-                result = "Failed to close resultset with error: " + e.getMessage();
+                result = "Could not get last week's performance: " + e.getMessage();
+            } finally {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    result = "Failed to close resultset with error: " + e.getMessage();
+                }
             }
         }
         return result;
