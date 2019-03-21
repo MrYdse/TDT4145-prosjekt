@@ -58,6 +58,8 @@ public class UI extends Sql {
             case "listmachines":
                 print(listMachines());
                 break;
+            case "exit":
+                break;
             default:
                 System.out.println(
                         "Is your method in the method list, and/or have you specified the required arguments?");
@@ -138,7 +140,12 @@ public class UI extends Sql {
     }
 
     private String addUser(String name) {
-        return super.executeInsertQuery(Queries.INSERT_USER(name));
+        if (whoIsUsername(name) == "Could not get user id from username") {
+            return super.executeInsertQuery(Queries.INSERT_USER(name));
+        }
+        else {
+            return "A user by that name already exists";
+        }
     }
 
     private String addFreeExercise(String name, String description) {
