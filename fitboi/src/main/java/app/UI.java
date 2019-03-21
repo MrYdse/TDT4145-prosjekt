@@ -1,20 +1,13 @@
 package app;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Map;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.LinkedHashMap;
-
-import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
-
-import java.util.Date;
 
 public class UI extends Sql {
 
@@ -48,6 +41,8 @@ public class UI extends Sql {
         methods.put("'List workouts by exercise in date range'", "Syntax: listWorkoutsByExerciseInDaterange /<exerciseID /<intervalStart>('yyyy-MM-dd') /<intervalEnd>('yyyy-MM-dd')");
         methods.put("'List workouts'", "Syntax: listWorkouts");
         methods.put("'List users'", "Syntax: listUsers");
+        methods.put("'List Workouts By Exercise In DateRange'", "Syntax: listWorkoutsByExerciseInDateRange /<exerciseID> /<interval start> /<interval end>");
+        methods.put("'Exit the program'", "Syntax: exit");
 
         // methods.put("''", "Syntax: ");
     }
@@ -78,6 +73,7 @@ public class UI extends Sql {
                 print(listUsers());
                 break;
             case "exit":
+                System.exit(0);
                 break;
             default:
                 System.out.println(
