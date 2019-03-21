@@ -30,20 +30,20 @@ public class UI extends Sql {
         this.connect();
 
         methods.put("'Help'", "Prints list of methods");
-        methods.put("'Add user'", "Syntax: AddUser -<username>");
-        methods.put("'Who has this username'", "Syntax: whois -<username>");
-        methods.put("'Add exercise group'", "Syntax: AddExerciseGroup -<name>");
-        methods.put("'Add machine'", "Syntax: AddMachine -<machineID> -<kilos> -<sets>");
-        methods.put("'Add free exercise'", "Syntax: AddFreeExercise -<description>");
-        methods.put("'Add machine exercise'", "Syntax: AddMachineExercise -<name> -<sets> -<machineID> -<kilos>");
-        methods.put("'Add workout'", "Syntax: AddWorkout -<datetime> -<note> -<duration> -<fitness> -<performance>");
-        methods.put("'Connect exercise to group'", "Syntax: ConnectExerciseToGroup -<exerciseId> -<exerciseGroupId>");
-        methods.put("'Connect user workout'", "Syntax: ConnectUserWorkout -<userID> -<workoutID>");
-        methods.put("'Connect workout exercise'", "Syntax: ConnectWorkoutExercise -<workoutID> -<exerciseID>");
+        methods.put("'Add user'", "Syntax: AddUser /<username>");
+        methods.put("'Who has this username'", "Syntax: whois /<username>");
+        methods.put("'Add exercise group'", "Syntax: AddExerciseGroup /<name>");
+        methods.put("'Add machine'", "Syntax: AddMachine /<name> /<description>");
+        methods.put("'Add free exercise'", "Syntax: AddFreeExercise /<name> /<description>");
+        methods.put("'Add machine exercise'", "Syntax: AddMachineExercise /<name> /<sets> /<machineID> /<kilos>");
+        methods.put("'Add workout'", "Syntax: AddWorkout /<datetime> /<note> /<duration> /<fitness> /<performance>");
+        methods.put("'Connect exercise to group'", "Syntax: ConnectExerciseToGroup /<exerciseId> /<exerciseGroupId>");
+        methods.put("'Connect user workout'", "Syntax: ConnectUserWorkout /<userID> /<workoutID>");
+        methods.put("'Connect workout exercise'", "Syntax: ConnectWorkoutExercise /<workoutID> /<exerciseID>");
         methods.put("'List exercise groups'", "Syntax: listExerciseGroups");
-        methods.put("'List exercises in gruop'", "Syntax: listExercisesInGroup -<groupname>");
-        methods.put("'List user performace for last week'", "Syntax: listPerformanceLastWeek -<username>");
-        methods.put("'List users n last workouts'", "Syntac: listUsersLastWorkouts -<userID> -<n>");
+        methods.put("'List exercises in gruop'", "Syntax: listExercisesInGroup /<groupname>");
+        methods.put("'List user performace for last week'", "Syntax: listPerformanceLastWeek /<username>");
+        methods.put("'List users n last workouts'", "Syntac: listUsersLastWorkouts /<userID> /<n>");
         methods.put("'List machines'", "Syntax: listMachines");
         methods.put("'List exercises'", "Syntax: listExercises");
         methods.put("'List workouts'", "Syntax: listWorkouts");
@@ -54,7 +54,10 @@ public class UI extends Sql {
 
     public void handleInput(String input) {
         ArrayList<String> args = new ArrayList<String>(
-                Arrays.asList(input.toLowerCase().replaceAll("\\s+", "").split("-")));
+                Arrays.asList(input.toLowerCase().split("/")));
+        for (int i = 0 ; i < args.size(); i++) {
+            args.set(i, args.get(i).trim());
+        }
         if (args.size() == 1) {
             switch (args.get(0)) {
             case "help":
@@ -97,6 +100,9 @@ public class UI extends Sql {
             case "listexercisesingroup":
                 print(listExercisesInGroup(args.get(1)));
                 break;
+            case "listalluserworkouts": case "lauw":
+                print(listUsersWorkouts(args.get(1)));
+                break;
             case "listperformancelastweek": case "lplw":
                 print(listPerformanceLastWeek(args.get(1)));
                 break;
@@ -118,7 +124,7 @@ public class UI extends Sql {
             case "addfreeexercise":
                 print(addFreeExercise(args.get(1), args.get(2)));
                 break;
-            case "connectuserworkoout":
+            case "connectuserworkout":
                 print(connectUserWorkout(args.get(1), args.get(2)));
                 break;
             case "connectworkoutexercise":
@@ -302,6 +308,32 @@ public class UI extends Sql {
         return out;
     }
 
+    private String listUsersWorkouts(String userID) {
+        Object response = super.executeReturnQuery(Queries.GET_ALL_WORKOUTS_FOR_USER(userID));
+        if (response instanceof String) {
+            return (String) response;
+        } else {
+            ResultSet rs = (ResultSet) response;
+            String out = "";
+            try {
+                while (rs.next()) {
+                    out += "User ID: " + rs.getString("uid") + " Date: " + rs.getString("wodatetime") + " Note: "
+                            + rs.getString("note") +" Duration: " + rs.getString("duration") + " Fitness: " + rs.getString("fitness")
+                            + " Performance: " + rs.getString("performance") + "\n";
+                }
+            } catch (Exception e) {
+                out = "Failed to read resultset with error: " + e.getMessage();
+            } finally {
+                try {
+                    rs.close();
+                } catch (Exception e) {
+                    out = "Failed to close resultset with error: " + e.getMessage();
+                }
+            }
+            return out;
+        }
+    }
+
     private String listUsersLastWorkouts(String userID, String n) {
         Object response = super.executeReturnQuery(Queries.GET_N_LAST_WORKOUTS_FOR_USER(n, userID));
         if (response instanceof String) {
@@ -337,7 +369,7 @@ public class UI extends Sql {
             String out = "";
             try {
                 while (rs.next()) {
-                    out += "User ID: " + rs.getString("uid") + " Name: " + rs.getString("name") + "\n";
+                    out += "User ID: " + rs.getString("uid") + " Username: " + rs.getString("username") + "\n";
                 }
             } catch (Exception e) {
                 out = "Failed to read resultset with error: " + e.getMessage();

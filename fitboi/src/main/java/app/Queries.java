@@ -23,8 +23,8 @@ public final class Queries {
 
     //addFreeExercise
     public static String INSERT_FREE_EXERCISE(String name, String description) {
-        return "INSERT INTO exercise (name) VALUES (\"" + name + "\");"
-            + "INSERT INTO freeexercise (eid, description) Values ((SELECT LAST_INSERT_ID() FROM exercise), \"" + description + "\");";
+        return "INSERT INTO exercise (name) VALUES (\"" + name + "\");\n"
+            + "INSERT INTO freeexercise (eid, description) VALUES (LAST_INSERT_ID(), \"" + description + "\");";
     }
 
     //addMachineExercise
@@ -100,11 +100,11 @@ public final class Queries {
 */
 
     public static String GET_ALL_WORKOUTS() {
-        return "SELECT wid, wodatetime, note, duration, fitness, perfomance FROM workout;";
+        return "SELECT wid, wodatetime, note, duration, fitness, performance FROM workout;";
     }
 
-    public static String GET_ALL_WORKOUTS_FOR_USER(int uid) {
-        return "SELECT wid, wodatetime, note, duration, fitness, perfomance FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + uid + ";";
+    public static String GET_ALL_WORKOUTS_FOR_USER(String userID) {
+        return "SELECT uid, wid, wodatetime, note, duration, fitness, performance FROM (workout NATURAL JOIN userworkedout) WHERE uid = " + userID + ";";
     }
 
     public static String INSERT_WORKOUT(String datetime, String note, String duration, String fitness, String perfomance) {
