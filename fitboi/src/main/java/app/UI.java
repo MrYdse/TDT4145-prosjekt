@@ -27,18 +27,25 @@ public class UI extends Sql {
         this.connect();
 
         methods.put("'Help'", "Prints list of methods");
-        methods.put("'Add user'", "Syntax: AddUser");
-        methods.put("'Add exercise group'", "Syntax: AddExerciseGroup <name>");
-        methods.put("'Add machine'", "Syntax: AddMachine <machineID> <kilos> <sets>");
-        methods.put("'Add free exercise'", "Syntax: AddFreeExercise <description>");
-        methods.put("'Add workout'", "Syntax: AddWorkout <date> <time> <note> <duration> <fitness> <performance>");
-        methods.put("'Connect exercise to group'", "Syntax: ConnectExerciseToGroup <exerciseId> <exerciseGroupId>");
-        methods.put("'Connect user workout'", "Syntax: ConnectUserWorkout <userID> <workoutID>");
-        methods.put("'Connect workout exercise'", "Syntax: ConnectWorkoutExercise <workoutID> <exerciseID>");
+        methods.put("'Add user'", "Syntax: AddUser -<username>");
+        methods.put("'Who has this username'", "Syntax: whois -<username>");
+        methods.put("'Add exercise group'", "Syntax: AddExerciseGroup -<name>");
+        methods.put("'Add machine'", "Syntax: AddMachine -<machineID> -<kilos> -<sets>");
+        methods.put("'Add free exercise'", "Syntax: AddFreeExercise -<description>");
+        methods.put("'Add machine exercise'", "Syntax: AddMachineExercise -<name> -<sets> -<machineID> -<kilos>");
+        methods.put("'Add workout'", "Syntax: AddWorkout -<datetime> -<note> -<duration> -<fitness> -<performance>");
+        methods.put("'Connect exercise to group'", "Syntax: ConnectExerciseToGroup -<exerciseId> -<exerciseGroupId>");
+        methods.put("'Connect user workout'", "Syntax: ConnectUserWorkout -<userID> -<workoutID>");
+        methods.put("'Connect workout exercise'", "Syntax: ConnectWorkoutExercise -<workoutID> -<exerciseID>");
         methods.put("'List exercise groups'", "Syntax: listExerciseGroups");
+        methods.put("'List exercises in gruop'", "Syntax: listExercisesInGroup -<groupname>");
+        methods.put("'List user performace for last week'", "Syntax: listPerformanceLastWeek -<username>");
+        methods.put("'List users n last workouts'", "Syntac: listUsersLastWorkouts -<userID> -<n>");
         methods.put("'List machines'", "Syntax: listMachines");
         methods.put("'List exercises'", "Syntax: listExercises");
         methods.put("'List workouts'", "Syntax: listWorkouts");
+        methods.put("'List users'", "Syntax: listUsers");
+
         // methods.put("''", "Syntax: ");
     }
 
@@ -61,6 +68,9 @@ public class UI extends Sql {
             case "listmachines":
                 print(listMachines());
                 break;
+            case "listusers":
+                print(listUsers());
+                break;
             default:
                 System.out.println(
                         "Is your method in the method list, and/or have you specified the required arguments?");
@@ -78,6 +88,12 @@ public class UI extends Sql {
                 break;
             case "whois":
                 print(whoIsUsername(args.get(1)));
+                break;
+            case "listexercisesingroup":
+                print(listExercisesInGroup(args.get(1)));
+                break;
+            case "listperformancelastweek":
+                print(listPerformanceLastWeek(args.get(1)));
                 break;
             default:
                 System.out.println(
@@ -102,6 +118,10 @@ public class UI extends Sql {
                 break;
             case "connectworkoutexercise":
                 print(connectWorkoutExercise(args.get(1), args.get(2)));
+                break;
+            case "listuserslastworkouts":
+                print(listUsersLastWorkouts(args.get(1), args.get(2)));
+                break;
             default:
                 System.out.println(
                         "Is your method in the method list, and/or have you specified the required arguments?");
