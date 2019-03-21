@@ -65,16 +65,16 @@ public class UI extends Sql {
                     System.out.printf(format, entry.getKey(), entry.getValue());
                 }
                 break;
-            case "listexercisegroups":
+            case "listexercisegroups": case "leg":
                 print(listExerciseGroups());
                 break;
-            case "listexercises":
+            case "listexercises": case "le":
                 print(listExercises());
                 break;
-            case "listmachines":
+            case "listmachines": case "lm":
                 print(listMachines());
                 break;
-            case "listusers":
+            case "listusers": case "lu":
                 print(listUsers());
                 break;
             case "exit":
@@ -88,16 +88,16 @@ public class UI extends Sql {
 
         if (args.size() == 2) {
             switch (args.get(0)) {
-            case "adduser":
+            case "adduser": case "au":
                 print(addUser(args.get(1)));
                 break;
-            case "addexercisegroup":
+            case "addexercisegroup": case "aeg":
                 print(addExerciseGroup(args.get(1)));
                 break;
-            case "whois":
+            case "whois": case "wi":
                 print(whoIsUsername(args.get(1)));
                 break;
-            case "listexercisesingroup":
+            case "listexercisesingroup": case "leig":
                 print(listExercisesInGroup(args.get(1)));
                 break;
             case "listalluserworkouts": case "lauw":
@@ -115,19 +115,19 @@ public class UI extends Sql {
 
         if (args.size() == 3) {
             switch (args.get(0)) {
-            case "addmachine":
+            case "addmachine": case "am":
                 print(addMachine(args.get(1), args.get(2)));
                 break;
-            case "connectexercisetogroup":
+            case "connectexercisetogroup": case "cetg":
                 print(connectExerciseToGroup(args.get(1), args.get(2)));
                 break;
-            case "addfreeexercise":
+            case "addfreeexercise": case "afe":
                 print(addFreeExercise(args.get(1), args.get(2)));
                 break;
-            case "connectuserworkout":
+            case "connectuserworkout": case "cuw":
                 print(connectUserWorkout(args.get(1), args.get(2)));
                 break;
-            case "connectworkoutexercise":
+            case "connectworkoutexercise": case "cwe":
                 print(connectWorkoutExercise(args.get(1), args.get(2)));
                 break;
             case "listuserslastworkouts": case "lulw":
@@ -142,7 +142,7 @@ public class UI extends Sql {
 
         if (args.size() == 4) {
             switch (args.get(0)) {
-            case "addmachineexercise":
+            case "addmachineexercise": case "ame":
                 print(addMachineExercise(args.get(1), args.get(2), args.get(3), input));
                 break;
             default:
@@ -154,7 +154,7 @@ public class UI extends Sql {
 
         if (args.size() > 4) {
             switch (args.get(0)) {
-            case "addworkout":
+            case "addworkout": case "aw":
                 print(addWorkout(args.get(1), args.get(2), args.get(3), args.get(4), args.get(5)));
                 break;
             default:
