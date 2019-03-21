@@ -383,7 +383,7 @@ public class UI extends Sql {
             try {
                 rs.close();
             } catch (Exception e) {
-                return "Failed to close resultset with error: " + e.getMessage();
+                result = "Failed to close resultset with error: " + e.getMessage();
             }
         }
         return result;
@@ -393,19 +393,20 @@ public class UI extends Sql {
 
     private String whoIsUsername(String username) {
         ResultSet rs = (ResultSet) super.executeReturnQuery(Queries.GET_USER_ID_BY_NAME(username));
+        String result = "";
         try {
             rs.next();
-            String result = "" + rs.getString("uid");
-            return result;
+            result = "" + rs.getString("uid");
         } catch (Exception e) {
-            return "Could not get user id from username";
+            result = "Could not get user id from username";
         } finally {
             try {
                 rs.close();
             } catch (Exception e) {
-                return "Failed to close resultset with error: " + e.getMessage();
+                result = "Failed to close resultset with error: " + e.getMessage();
             }
         }
+        return result;
     }
 
     private void print(String string) {
