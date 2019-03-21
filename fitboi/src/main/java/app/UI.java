@@ -7,10 +7,10 @@ import java.time.format.DateTimeFormatter;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.HashMap;
 import java.util.Map;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.util.LinkedHashMap;
 
 import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 
@@ -20,7 +20,7 @@ public class UI extends Sql {
 
     private PrintStream printStream;
 
-    private Map<String, String> methods = new HashMap<String, String>();
+    private Map<String, String> methods = new LinkedHashMap<String, String>();
     private String format = "%-40s%s%n";
 
     public UI(PrintStream stream) {
