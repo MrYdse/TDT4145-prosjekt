@@ -1,8 +1,6 @@
 package app;
 
 import java.sql.*;
-import java.text.DateFormat;
-import java.text.SimpleDateFormat;
 import java.time.format.DateTimeFormatter;
 import java.io.PrintStream;
 import java.util.ArrayList;
