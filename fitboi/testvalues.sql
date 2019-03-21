@@ -20,19 +20,19 @@ insert into userworkedout (uid, wid) values (1, 1);
 insert into userworkedout (uid, wid) values (1, 2);
 insert into userworkedout (uid, wid) values (1, 3);
 insert into userworkedout (uid, wid) values (1, 4);
-insert into exercise (name) values ("Pushups"); # eid 1
+insert into exercise (name) values ("pushups"); # eid 1
 insert into freeexercise (eid, description) values (1, "Pushing the earth away repeatedly");
 insert into machine (name, functiondescription) values ("Weightbench", "Used for benchpressing"); # mid 1
-insert into exercise (name) values ("Benchpress"); # eid 2
+insert into exercise (name) values ("benchpress"); # eid 2
 insert into machineexercise (eid, kilos, sets, mid) values (2, 15, 5, 1);
-insert into exercise (name) values ("Jogging"); # eid 3
+insert into exercise (name) values ("jogging"); # eid 3
 insert into freeexercise (eid, description) values (3, "Moving one leg in front of the other really fast");
 insert into workoutcontains (wid, eid) values (1, 1);
 insert into workoutcontains (wid, eid) values (2, 2);
 insert into workoutcontains (wid, eid) values (3, 3);
 insert into workoutcontains (wid, eid) values (4, 2);
-insert into exercisegroup (name) values ("Strength exercises"); # egid 1
+insert into exercisegroup (name) values ("strength exercises"); # egid 1
 insert into exerciseispartofgroup (eid, egid) values (1, 1);
 insert into exerciseispartofgroup (eid, egid) values (2, 1);
-insert into exercisegroup (name) values ("Endurance exercises"); # egid 2
+insert into exercisegroup (name) values ("endurance exercises"); # egid 2
 insert into exerciseispartofgroup (eid, egid) values (3, 2);
